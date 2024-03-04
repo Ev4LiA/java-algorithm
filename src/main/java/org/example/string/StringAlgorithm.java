@@ -1,9 +1,52 @@
 package org.example.string;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class StringAlgorithm {
+    // 6. Zigzag Conversion
+    public String convert(String s, int numRows) {
+        String[] arr = new String[numRows];
+        Arrays.fill(arr, "");
+        int i = 0, n = s.length();
+        while (i < n) {
+            for (int row = 0; row < numRows && i < n; row++) {
+                arr[row] += s.charAt(i);
+                i++;
+            }
+            for (int row = numRows - 2; row > 0 && i < n; row--) {
+                arr[row] += s.charAt(i);
+                i++;
+            }
+        }
+
+        String res = "";
+        for (String a : arr) {
+            res += a;
+        }
+        return res;
+    }
+
+    // 12. Integer to Roman
+    public String intToRoman(int num) {
+        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] roman = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        while (num > 0) {
+            if (num >= values[i]) {
+                sb.append(roman[i]);
+                num -= values[i];
+            } else {
+                i++;
+            }
+        }
+        return sb.toString();
+    }
+
     // 13. Roman to Integer
     public int romanToInt(String s) {
         HashMap<Character, Integer> map = new HashMap<>();
@@ -74,6 +117,67 @@ public class StringAlgorithm {
         return count;
     }
 
+    // 68. Text Justification
+    public List<String> fullJustify(String[] words, int maxWidth) {
+        int n = words.length;
+
+        List<String> ans = new ArrayList<>();
+        int start=0;
+        while(start<n){
+            int[] idxSum = decideLine(words, start, maxWidth, n);
+            int end = idxSum[0];
+            int cumSum = idxSum[1];
+            ans.add(createLine(words, start, end, cumSum, maxWidth, n));
+            start = end+1;
+        }
+        return ans;
+    }
+    public int[] decideLine(String[] words, int start, int maxWidth, int n){
+        int cumSum = 0, spaces = 0;
+        int end = start;
+
+        while(end<n){
+            cumSum += words[end].length();
+            if(cumSum + spaces > maxWidth){
+                return new int[]{end-1, cumSum - words[end].length()};
+            }
+            spaces++; // for space
+            end++;
+        }
+        return new int[]{end-1, cumSum};
+    }
+    public String createLine(String[] words, int start, int end, int cumSum, int maxWidth, int n){
+
+        int spaces = maxWidth - cumSum;
+        int wordSpaces = end - start;
+        int reqSpaces = (end == n-1 || end==start)? 0 : spaces / wordSpaces;
+
+        StringBuilder spaceWord = new StringBuilder();
+        while(reqSpaces>0){
+            spaceWord.append(' ');
+            reqSpaces--;
+        }
+
+        int extraSpacing = (end == n-1 || end==start)? spaces : spaces % wordSpaces;
+
+        StringBuilder sb = new StringBuilder();
+
+        while(sb.length() !=  maxWidth){
+
+            if(start <= end)
+                sb.append(words[start]);
+
+            if(start++ < end)
+                sb.append(spaceWord);//only if the word is not the end
+
+            if(extraSpacing>0){
+                sb.append(' ');//adding the extra spaces!
+                extraSpacing--;
+            }
+        }
+        return sb.toString();
+    }
+
     // 125. Valid Palindrome
     public boolean isPalindrome(String s) {
         if (s.isEmpty()) return true;
@@ -96,6 +200,18 @@ public class StringAlgorithm {
             }
         }
         return true;
+    }
+
+    // 151. Reverse Words in a String
+    public String reverseWords(String s) {
+        String[] str = s.trim().split("\\s+");
+
+        StringBuilder res = new StringBuilder();
+        for (int i = str.length - 1; i > 0; i--) {
+            res.append(str[i]).append(" ");
+        }
+        res.append(str[0]);
+        return res.toString();
     }
 
     // 977. Squares of a Sorted Array

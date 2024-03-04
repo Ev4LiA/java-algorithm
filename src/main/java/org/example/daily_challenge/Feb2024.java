@@ -1,8 +1,10 @@
 package org.example.daily_challenge;
 
+import org.example.utilities.TreeNode;
+
 import java.util.*;
 
-public class DailyChallengeFebruary {
+public class Feb2024 {
     // 2971. Find Polygon With the Largest Perimeter
     public long largestPerimeter(int[] nums) {
         // Sort the array
@@ -23,7 +25,7 @@ public class DailyChallengeFebruary {
                 return sum[i];
             }
         }
-        return -1;
+        return 0;
     }
 
     // 1642. Furthest Building You Can Reach
@@ -203,4 +205,21 @@ public class DailyChallengeFebruary {
         rank[a] += rank[b];
     }
 
+    // 513. Find Bottom Left Tree Value
+    public int findBottomLeftValue(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int result = root.val;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode curr = queue.poll();
+                if (i == 0) result = curr.val;
+
+                if (curr.left != null) queue.offer(curr.left);
+                if (curr.right != null) queue.offer(curr.right);
+            }
+        }
+        return result;
+    }
 }
