@@ -31,4 +31,26 @@ public class March2024 {
         }
         return score;
     }
+
+    // 1750. Minimum Length of String After Deleting Similar Ends
+    public int minimumLength(String s) {
+        int n = s.length();
+        if (n == 1) return 1;
+        int start = 0, end = n - 1;
+
+        while (start < end) {
+            if (s.charAt(start) == s.charAt(end)) {
+                char same = s.charAt(start);
+                while (start <= end && s.charAt(start) == same) {
+                    start++;
+                }
+                while (start <= end && s.charAt(end) == same) {
+                    end--;
+                }
+            } else {
+                break;
+            }
+        }
+        return end - start + 1;
+    }
 }
