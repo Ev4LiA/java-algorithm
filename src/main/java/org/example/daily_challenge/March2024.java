@@ -1,8 +1,23 @@
 package org.example.daily_challenge;
 
+import org.example.linked_list.ListNode;
+
 import java.util.Arrays;
 
 public class March2024 {
+
+    // 876. Middle of the Linked List
+    public ListNode middleNode(ListNode head) {
+        if (head.next == null) return head;
+        ListNode fast = head, slow = head;
+
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
     // 948. Bag of Tokens
     public static int bagOfTokensScore(int[] tokens, int power) {
         int n = tokens.length;
