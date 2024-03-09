@@ -3,8 +3,24 @@ package org.example.daily_challenge;
 import org.example.linked_list.ListNode;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class March2024 {
+    // 141. Linked List Cycle
+    public boolean hasCycle(ListNode head) {
+        if (head == null) return false;
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) return true;
+        }
+        return false;
+    }
+
 
     // 876. Middle of the Linked List
     public ListNode middleNode(ListNode head) {
@@ -67,5 +83,38 @@ public class March2024 {
             }
         }
         return end - start + 1;
+    }
+
+    // 2540. Minimum Common Value
+    public int getCommon(int[] nums1, int[] nums2) {
+        int i = 0, j = 0;
+        while (i < nums1.length && j < nums2.length) {
+            if (nums1[i] > nums2[j]) {
+                j++;
+            } else if (nums1[i] < nums2[j]) {
+                i++;
+            } else {
+                return nums1[i];
+            }
+        }
+        return -1;
+    }
+
+    // 3005. Count Elements With Maximum Frequency
+    public int maxFrequencyElements(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        int max = Integer.MIN_VALUE;
+        int count = 0;
+
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+            if (map.get(num) > max) {
+                count = 1;
+                max = map.get(num);
+            } else if (map.get(num) == max) {
+                count++;
+            }
+        }
+        return count * max;
     }
 }
