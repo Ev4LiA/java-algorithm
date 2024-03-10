@@ -2,9 +2,7 @@ package org.example.daily_challenge;
 
 import org.example.linked_list.ListNode;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class March2024 {
     // 141. Linked List Cycle
@@ -21,6 +19,28 @@ public class March2024 {
         return false;
     }
 
+    // 349. Intersection of Two Arrays
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set = new HashSet<>();
+        Set<Integer> intersection = new HashSet<>();
+
+        for (int num : nums1) {
+            set.add(num);
+        }
+
+        for (int num : nums2) {
+            if (set.contains(num)) {
+                intersection.add(num);
+            }
+        }
+
+        int[] res = new int[intersection.size()];
+        int i = 0;
+        for (Integer num : intersection) {
+            res[i++] = num;
+        }
+        return res;
+    }
 
     // 876. Middle of the Linked List
     public ListNode middleNode(ListNode head) {
