@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.arrays.ArraysAlgorithm;
 import org.example.daily_challenge.March2024;
+import org.example.sliding_window.SlidingWindow;
 import org.example.string.StringAlgorithm;
 import org.example.weekly_contest.Contest388;
 
@@ -9,7 +10,7 @@ import org.example.weekly_contest.Contest388;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        March2024 problem = new March2024();
+        SlidingWindow problem = new SlidingWindow();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -21,7 +22,7 @@ public class Main {
         String order = "cba";
         String s = "abcd";
 
-        int[] arr = {1,2,3,-1,2};
-        System.out.println(problem.customSortString(order, s));
+        int[] arr = {2,3,1,2,4,3};
+        System.out.println(problem.minSubArrayLen(7, arr));
     }
 }
