@@ -42,12 +42,34 @@ public class March2024 {
         return res;
     }
 
+    // 791. Custom Sort String
+    public String customSortString(String order, String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        StringBuilder result = new StringBuilder();
+
+        for (char a : s.toCharArray()) {
+            map.put(a, map.getOrDefault(a, 0) + 1);
+        }
+
+        for (char a : order.toCharArray()) {
+            if (!map.containsKey(a) || map.get(a) == 0) continue;
+            int num = map.get(a);
+            result.append(String.valueOf(a).repeat(num));
+            map.remove(a);
+        }
+
+        for (char a : map.keySet()) {
+            result.append(String.valueOf(a).repeat(map.get(a)));
+        }
+        return result.toString();
+    }
+
     // 876. Middle of the Linked List
     public ListNode middleNode(ListNode head) {
         if (head.next == null) return head;
         ListNode fast = head, slow = head;
 
-        while(fast != null && fast.next != null) {
+        while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
