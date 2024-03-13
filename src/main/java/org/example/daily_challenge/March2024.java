@@ -105,6 +105,34 @@ public class March2024 {
         return score;
     }
 
+    // 1171. Remove Zero Sum Consecutive Nodes from Linked List
+    public ListNode removeZeroSumSublists(ListNode head) {
+        ListNode start = new ListNode(0);
+        start.next = head;
+        ListNode cur = start.next;
+        int prefixSum = 0;
+        HashMap<Integer, ListNode> map = new HashMap<>();
+        map.put(0, start);
+        while (cur != null) {
+            prefixSum += cur.val;
+            if (map.containsKey(prefixSum)) {
+                ListNode prev = map.get(prefixSum);
+                ListNode toRemove = prev.next;
+                int p = prefixSum + (toRemove == null ? 0 : toRemove.val);
+                while (p != prefixSum) {
+                    map.remove(p);
+                    toRemove = toRemove.next;
+                    p = p + (toRemove == null ? 0 : toRemove.val);
+                }
+                prev.next = cur.next;
+            } else  {
+                map.put(prefixSum, cur);
+            }
+            cur = cur.next;
+        }
+        return start.next;
+    }
+
     // 1750. Minimum Length of String After Deleting Similar Ends
     public int minimumLength(String s) {
         int n = s.length();

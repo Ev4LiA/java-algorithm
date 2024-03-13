@@ -1,5 +1,6 @@
 package org.example.string;
 
+import javax.swing.text.Style;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -231,6 +232,23 @@ public class StringAlgorithm {
         return res;
     }
 
+    // 1071. Greatest Common Divisor of Strings
+    public String gcdOfStrings(String str1, String str2) {
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        sb1.append(str1).append(str2);
+        sb2.append(str2).append(str1);
+
+        if (sb1.toString().contentEquals(sb2)) {
+            return str1.substring(0, gcd(str1.length(), str2.length()));
+        } else {
+            return "";
+        }
+    }
+
+    private int gcd(int a, int b) {
+        return b == 0 ? a : gcd(b, a % b);
+    }
 
     // 1929. Concatenation of Array
     public int[] getConcatenation(int[] nums) {
