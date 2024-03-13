@@ -127,6 +127,26 @@ public class March2024 {
         return end - start + 1;
     }
 
+    // 2485. Find the Pivot Integer
+    public int pivotInteger(int n) {
+        int sum1 = 0, sum2 = 0, i = 1, j = n;
+        while (i <= j) {
+            if (sum1 < sum2) {
+                sum1 += i++;
+            } else if (sum1 > sum2) {
+                sum2 += j--;
+            } else {
+                if (i == j) {
+                    return i;
+                } else {
+                    sum1 += i++;
+                    sum2 += j--;
+                }
+            }
+        }
+        return -1;
+    }
+
     // 2540. Minimum Common Value
     public int getCommon(int[] nums1, int[] nums2) {
         int i = 0, j = 0;
