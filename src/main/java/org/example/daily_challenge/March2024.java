@@ -76,6 +76,20 @@ public class March2024 {
         return slow;
     }
 
+    // 930. Binary Subarrays With Sum
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        int sum = 0, count = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            sum += num;
+            if (map.containsKey(sum - goal)) {
+                count += map.get(sum - goal);
+            }
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return count;
+    }
+
     // 948. Bag of Tokens
     public static int bagOfTokensScore(int[] tokens, int power) {
         int n = tokens.length;
