@@ -5,6 +5,47 @@ import org.example.linked_list.ListNode;
 import java.util.*;
 
 public class March2024 {
+    // 57. Insert Interval
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        int n = intervals.length;
+        if (n == 0) {
+            return new int[][]{newInterval};
+        }
+        ArrayList<int[]> res = new ArrayList<>();
+
+        int start = newInterval[0];
+        int end = newInterval[1];
+        boolean inserted = false;
+        for (int[] inv : intervals) {
+            int cstart = inv[0];
+            int cend = inv[1];
+            if (cend < start || inserted) {
+                res.add(new int[]{cstart, cend});
+                continue;
+            }
+
+            start = Math.min(cstart, start);
+
+            if (end < cstart) {
+                res.add(new int[]{start, end});
+                res.add(new int[]{cstart, cend});
+                inserted = true;
+                continue;
+            }
+
+            if (end <= cend) {
+                res.add(new int[]{start, cend});
+                inserted = true;
+            }
+        }
+
+        if (!inserted) {
+            res.add(new int[]{start, end});
+        }
+
+        return res.toArray(new int[res.size()][]);
+    }
+
     // 141. Linked List Cycle
     public boolean hasCycle(ListNode head) {
         if (head == null) return false;
@@ -17,6 +58,24 @@ public class March2024 {
             if (slow == fast) return true;
         }
         return false;
+    }
+
+    // 238. Product of Array Except Self
+    public int[] productExceptSelf(int[] nums) {
+        int left = 1, right = 1;
+        int[] res = new int[nums.length];
+        Arrays.fill(res, 1);
+        for (int i = 0; i < nums.length; i++) {
+            res[i] = res[i] * left;
+            left = left * nums[i];
+        }
+
+        for (int i = nums.length - 1; i >= 0; i--) {
+            res[i] = res[i] * right;
+            right = right * nums[i];
+        }
+
+        return res;
     }
 
     // 349. Intersection of Two Arrays
@@ -38,6 +97,28 @@ public class March2024 {
         int i = 0;
         for (Integer num : intersection) {
             res[i++] = num;
+        }
+        return res;
+    }
+
+    // 525. Contiguous Array
+    public int findMaxLength(int[] nums) {
+        int n = nums.length, res = 0, curSum = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == 0) {
+                curSum = curSum - 1;
+            } else {
+                curSum = curSum + 1;
+            }
+
+            if (map.containsKey(curSum)) {
+                res = Math.max(res, i - map.get(curSum));
+            } else {
+                map.put(curSum, i);
+            }
         }
         return res;
     }
@@ -139,7 +220,7 @@ public class March2024 {
                     p = p + (toRemove == null ? 0 : toRemove.val);
                 }
                 prev.next = cur.next;
-            } else  {
+            } else {
                 map.put(prefixSum, cur);
             }
             cur = cur.next;
