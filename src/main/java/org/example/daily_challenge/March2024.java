@@ -101,6 +101,38 @@ public class March2024 {
         return res;
     }
 
+    // 452. Minimum Number of Arrows to Burst Balloons
+    public int findMinArrowShots(int[][] points) {
+        if (points.length == 1) return 1;
+        int res = 1;
+        Arrays.sort(points, compare);
+        long end = points[0][1];
+        for (int i = 1; i < points.length; i++) {
+            int curStart = points[i][0];
+            int curEnd = points[i][1];
+            if (curStart <= end) {
+                if (end > curEnd) {
+                    end = curEnd;
+                }
+            } else {
+                end = curEnd;
+                res++;
+            }
+        }
+        return res;
+    }
+
+    Comparator<int[]> compare = new Comparator<int[]>() {
+        @Override
+        public int compare(int[] a, int[] b) {
+            // Compare b to a for descending order
+            if (a[0] == b[0]) {
+                return Integer.compare(a[1], b[1]);
+            }
+            return Integer.compare(a[0], b[0]);
+        }
+    };
+
     // 525. Contiguous Array
     public int findMaxLength(int[] nums) {
         int n = nums.length, res = 0, curSum = 0;

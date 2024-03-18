@@ -23,10 +23,10 @@ public class Main {
         String order = "cba";
         String s = "abcd";
 
-        int[][] intervals = {{3,5},{8,10}};
+        int[][] points = {{-2147483646,-2147483645},{2147483646,2147483647}};
         int[] newIntervals = {1,2};
         String s1 = "zzfzzzzppfp";
         char c = 't';
-        System.out.println(problem.insert(intervals, newIntervals));
+        System.out.println(problem.findMinArrowShots(points));
     }
 }
