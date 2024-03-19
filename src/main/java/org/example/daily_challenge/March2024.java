@@ -155,6 +155,24 @@ public class March2024 {
         return res;
     }
 
+    // 621. Task Scheduler
+    public int leastInterval(char[] tasks, int n) {
+        int max = Integer.MIN_VALUE, count = 0;
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        for (char task : tasks) {
+            map.put(task, map.getOrDefault(task, 0) + 1);
+            max = Math.max(map.get(task), max);
+        }
+
+        for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+            if (entry.getValue() == max) {
+                count++;
+            }
+        }
+        return Math.max((n + 1) * (max - 1) + count, tasks.length);
+    }
+
     // 791. Custom Sort String
     public String customSortString(String order, String s) {
         HashMap<Character, Integer> map = new HashMap<>();
