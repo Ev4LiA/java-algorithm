@@ -278,6 +278,25 @@ public class March2024 {
         return start.next;
     }
 
+    // 1669. Merge In Between Linked Lists
+    public ListNode mergeInBetween(ListNode list1, int a, int b, ListNode list2) {
+        ListNode start = list1;
+        for (int i = 0; i < a - 1; i++) {
+            start = start.next;
+        }
+        ListNode end = start;
+        for (int i = 0; i <= b - a + 1; i++) {
+            end = end.next;
+        }
+
+        start.next = list2;
+        while (start.next != null) {
+            start = start.next;
+        }
+        start.next = end;
+        return list1;
+    }
+
     // 1750. Minimum Length of String After Deleting Similar Ends
     public int minimumLength(String s) {
         int n = s.length();

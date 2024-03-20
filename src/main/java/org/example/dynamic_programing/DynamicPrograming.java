@@ -380,4 +380,50 @@ public class DynamicPrograming {
         }
         return dp[m][n];
     }
+
+    // 1478. Allocate Mailboxes
+    public final int INF = 100 * 10000;
+    public int minDistance(int[] houses, int k) {
+        int n = houses.length;
+        Arrays.sort(houses);
+        int[][] dp = new int[n][k];
+        int[][] cost = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int median = houses[(i + j) / 2];
+                int sum = 0;
+                for (int l = i; l <= j; l++) {
+                    sum += Math.abs(median - houses[l]);
+                }
+                cost[i][j] = sum;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(dp[i], -1);
+        }
+        return dp(houses, k, 0, 0, cost, dp);
+    }
+
+    public int dp(int[] houses, int k, int pos, int curK, int[][] cost, int[][] dp) {
+        // Last position
+        if (pos == houses.length) {
+            // Last mailbox
+            if (curK == k) {
+                return 0;
+            }
+            return INF;
+        }
+
+        if (curK == k) return INF;
+        if (dp[pos][curK] != -1) return dp[pos][curK];
+
+        int ans = INF;
+        for (int i = pos; i < houses.length; i++) {
+            ans = Math.min(ans, dp(houses, k, i + 1, curK + 1, cost, dp) + cost[pos][i]);
+        }
+        dp[pos][curK] = ans;
+        return ans;
+    }
 }

@@ -1,6 +1,8 @@
 package org.example.weekly_contest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Contest389 {
     // Existence of a Substring in a String and Its Reverse
@@ -30,66 +32,43 @@ public class Contest389 {
         if (n == 0) return 0;
         if (n == 1) return 1;
 
-        return n * (n - 1) / 2;
+        return n * (n - 1) / 2 + n;
     }
 
     // Minimum Deletions to Make String K-Special
     public int minimumDeletions(String word, int k) {
         int[] alpha = new int[26];
-        int res = 0;
+        int res = Integer.MAX_VALUE;
 
         for (char c : word.toCharArray()) {
             alpha[c - 'a']++;
         }
 
-        Arrays.sort(alpha);
-        int start = 0, end = 25;
-        while (alpha[start] == 0) {
-            start++;
-        }
-
-
-        int[] subArr = new int[end - start + 1];
-        for (int i = subArr.length - 1; i >= 0; i--) {
-            if (i == 0) {
-                subArr[i] = 0;
-            } else {
-                subArr[i] = alpha[start] - alpha[start - 1];
+        for(int freq1 : alpha) {
+            int cur = 0;
+            for (int freq2 : alpha) {
+                cur += (freq2 < freq1) ? freq2 : Math.max(0, freq2 - (freq1 + k));
             }
+            res = Math.min(res, cur);
         }
+        return res;
+    }
 
-        while (alpha[end] - alpha[start] > k) {
-            int min = alpha[start];
-            int max = alpha[end];
-            int sub = max - min;
-            if (sub > k) {
-                if (sub - k > min) {
-                    res += min;
-                    alpha[start] -= min;
-                    start++;
-                } else if (sub - k == min) {
-                    res += sub - k;
-                    int maxCount = 0, minCount = 0, i = start, j = end;
-                    while (alpha[i] == min) {
-                        minCount++;
-                        i++;
-                    }
-                    while (alpha[j] == max) {
-                        maxCount++;
-                        j--;
-                    }
-                    if (maxCount > minCount) {
-                        alpha[start] -= min;
-                        start++;
-                    } else {
-                        alpha[end] = max - (sub - k);
-                        Arrays.sort(alpha);
-                    }
-                } else {
-                    alpha[end] = max - (sub - k);
-                    res += sub - k;
-                    Arrays.sort(alpha);
-                }
+    // 3086. Minimum Moves to Pick K Ones
+    public long minimumMoves(int[] nums, int k, int maxChanges) {
+        List<Long> A = new ArrayList<>();
+        A.add(0L);
+        for (int i = 0; i < nums.length; i++)
+            if (nums[i] > 0)
+                A.add(A.get(A.size() - 1) + i);
+
+        int n = A.size() - 1, m = Math.max(0, k - maxChanges);
+        long res = Long.MAX_VALUE;
+        for (int l = m; l <= Math.min(n, Math.min(m + 3, k)); l++) {
+            for (int i = 0; i <= n - l; i++) {
+                int mid1 = i + l / 2, mid2 = i + l - l / 2;
+                long cur = A.get(i + l) - A.get(mid2) - (A.get(mid1) - A.get(i));
+                res = Math.min(res, cur + (k - l) * 2);
             }
         }
         return res;
