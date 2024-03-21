@@ -60,6 +60,20 @@ public class March2024 {
         return false;
     }
 
+    // 206. Reverse Linked List
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) return head;
+
+        ListNode prev = null, cur = head;
+        while (cur != null) {
+            ListNode temp = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = temp;
+        }
+        return prev;
+    }
+
     // 238. Product of Array Except Self
     public int[] productExceptSelf(int[] nums) {
         int left = 1, right = 1;
