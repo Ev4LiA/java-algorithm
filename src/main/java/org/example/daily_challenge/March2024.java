@@ -60,6 +60,36 @@ public class March2024 {
         return false;
     }
 
+    // 143. Reorder List
+    public void reorderList(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        ListNode prev = null;
+        while (slow != null) {
+            ListNode temp = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = temp;
+        }
+
+        slow = prev;
+
+        while (head != null && slow != null) {
+            ListNode temp = head.next;
+            ListNode temp2 = slow.next;
+            head.next = slow;
+            slow.next = temp;
+            head = temp;
+            slow = temp2;
+        }
+
+        if (head != null && head.next != null) head.next.next = null;
+    }
+
     // 206. Reverse Linked List
     public ListNode reverseList(ListNode head) {
         if (head == null || head.next == null) return head;
@@ -72,6 +102,21 @@ public class March2024 {
             cur = temp;
         }
         return prev;
+    }
+
+    // 234. Palindrome Linked List
+    public boolean isPalindrome(ListNode head) {
+        Stack<Integer> stack = new Stack<>();
+        ListNode cur = head;
+        while (cur != null) {
+            stack.push(cur.val);
+            cur = cur.next;
+        }
+        cur = head;
+        while (cur != null && cur.val == stack.pop()) {
+            cur = cur.next;
+        }
+        return cur == null;
     }
 
     // 238. Product of Array Except Self
@@ -91,6 +136,8 @@ public class March2024 {
 
         return res;
     }
+
+
 
     // 349. Intersection of Two Arrays
     public int[] intersection(int[] nums1, int[] nums2) {
