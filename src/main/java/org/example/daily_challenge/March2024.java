@@ -137,7 +137,21 @@ public class March2024 {
         return res;
     }
 
-
+    // 287. Find the Duplicate Number
+    public int findDuplicate(int[] nums) {
+        int slow = nums[0];
+        int fast = nums[nums[0]];
+        while (slow != fast) {
+            fast = nums[nums[fast]];
+            slow = nums[slow];
+        }
+        fast = 0;
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+    }
 
     // 349. Intersection of Two Arrays
     public int[] intersection(int[] nums1, int[] nums2) {
@@ -158,6 +172,20 @@ public class March2024 {
         int i = 0;
         for (Integer num : intersection) {
             res[i++] = num;
+        }
+        return res;
+    }
+
+    // 442. Find All Duplicates in an Array
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> res = new ArrayList<>();
+        for (int num : nums) {
+            int position = Math.abs(num) - 1;
+            if (nums[position] < 0) {
+                res.add(Math.abs(num));
+            } else {
+                nums[position] = -nums[position];
+            }
         }
         return res;
     }
