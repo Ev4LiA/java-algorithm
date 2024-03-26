@@ -5,6 +5,36 @@ import org.example.linked_list.ListNode;
 import java.util.*;
 
 public class March2024 {
+    // 41. First Missing Positive
+    public int firstMissingPositive(int[] nums) {
+        int n = nums.length;
+        boolean contains1 = false;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == 1) {
+                contains1 = true;
+            } else if (nums[i] <= 0 || nums[i] > n) {
+                nums[i] = 1;
+            }
+        }
+        if (!contains1) return 1;
+
+        for (int num : nums) {
+            if (Math.abs(num) == n) {
+                nums[0] = -Math.abs(nums[0]);
+            } else {
+                int position = Math.abs(num);
+                nums[position] = -Math.abs(nums[position]);
+            }
+        }
+
+        for (int i = 1; i < n; i++) {
+            if (nums[i] > 0) {
+                return i;
+            }
+        }
+        return nums[0] >= 0  ? n : n + 1;
+    }
+
     // 57. Insert Interval
     public int[][] insert(int[][] intervals, int[] newInterval) {
         int n = intervals.length;

@@ -13,7 +13,7 @@ import org.example.weekly_contest.Contest390;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Contest390 problem = new Contest390();
+        March2024 problem = new March2024();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -24,18 +24,17 @@ public class Main {
         String order = "cba";
         String s = "abcd";
 
-        int[] nums = {2,3,2,1};
+        int[] nums = {1,2,3,4,5,6,7,8,9,10,11,12,23,20};
         int[] freq = {3,2,-3,1};
         String s1 = "aaaa";
         char c = 't';
-
-        System.out.println(problem.minOperations(11));
+        System.out.println(problem.firstMissingPositive( nums));
 
         // System out Array
-        System.out.print("Array elements: ");
-        long[] res = problem.mostFrequentIDs(nums, freq);
-        for (int i = 0; i < res.length; i++) {
-            System.out.print(res[i] + " ");
-        }
+//        System.out.print("Array elements: ");
+//        long[] res = problem.mostFrequentIDs(nums, freq);
+//        for (int i = 0; i < res.length; i++) {
+//            System.out.print(res[i] + " ");
+//        }
     }
 }
