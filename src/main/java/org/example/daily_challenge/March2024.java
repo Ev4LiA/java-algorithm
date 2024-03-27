@@ -292,6 +292,29 @@ public class March2024 {
         return Math.max((n + 1) * (max - 1) + count, tasks.length);
     }
 
+    // 713. Subarray Product Less Than K
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        if (k <= 1) return 0;
+        int res = 0, prod = nums[0];
+        int left = 0, right = 1;
+        if (prod < k) res = 1;
+
+        while (right < nums.length) {
+            prod = prod * nums[right];
+            if (prod < k) {
+                res += right - left + 1;
+            } else {
+                while (prod >= k) {
+                    prod = prod / nums[left];
+                    left++;
+                }
+                res += right - left + 1;
+            }
+            right++;
+        }
+        return res;
+    }
+
     // 791. Custom Sort String
     public String customSortString(String order, String s) {
         HashMap<Character, Integer> map = new HashMap<>();
