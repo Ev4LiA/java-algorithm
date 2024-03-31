@@ -392,6 +392,11 @@ public class March2024 {
         return score;
     }
 
+    // 992. Subarrays with K Different Integers
+    public int subarraysWithKDistinct(int[] nums, int k) {
+        return 0;
+    }
+
     // 1171. Remove Zero Sum Consecutive Nodes from Linked List
     public ListNode removeZeroSumSublists(ListNode head) {
         ListNode start = new ListNode(0);
@@ -461,6 +466,21 @@ public class March2024 {
         return end - start + 1;
     }
 
+    // 2444. Count Subarrays With Fixed Bounds
+    public long countSubarrays(int[] nums, int minK, int maxK) {
+        long res = 0;
+        int badIndex = -1, minL = -1, maxL = -1;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] < minK || nums[i] > maxK) {
+                badIndex = i;
+            }
+
+            if (nums[i] == minK) minL = i;
+            if (nums[i] == maxK) maxL = i;
+            res += Math.max(0, Math.min(minL, maxL) - badIndex);
+        }
+        return res;
+    }
     // 2485. Find the Pivot Integer
     public int pivotInteger(int n) {
         int sum1 = 0, sum2 = 0, i = 1, j = n;
@@ -494,6 +514,23 @@ public class March2024 {
             }
         }
         return -1;
+    }
+
+    // 2958. Length of Longest Subarray With at Most K Frequency
+    public int maxSubarrayLength(int[] nums, int k) {
+        int n = nums.length;
+        int left = 0, right = 0, ans = Integer.MIN_VALUE;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        while(right < n) {
+            map.put(nums[right], map.getOrDefault(nums[right], 0) + 1);
+            while (map.get(nums[right]) > k) {
+                map.put(nums[left], map.get(nums[left]) - 1);
+                left++;
+            }
+            ans = Math.max(ans, right - left + 1);
+            right++;
+        }
+        return ans;
     }
 
     // 3005. Count Elements With Maximum Frequency
