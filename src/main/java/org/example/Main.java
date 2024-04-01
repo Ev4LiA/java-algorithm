@@ -1,13 +1,14 @@
 package org.example;
 
 import org.example.biweekly_contest.Contest127;
+import org.example.daily_challenge.April2024;
 import org.example.weekly_contest.Contest391;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Contest391 problem = new Contest391();
+        April2024 problem = new April2024();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -24,7 +25,8 @@ public class Main {
         char c = 't';
         int[] nums = {0,1,1,1,0,1};
         int[][] arrays = {{3,10},{5,15},{10,2},{4,4}};
-        System.out.println(problem.minimumDistance(arrays));
+        s = "   fly me   to   the moon  ";
+        System.out.println(problem.lengthOfLastWord(s));
 //        System.out.println(3 | 3);
 
         // System out Array
