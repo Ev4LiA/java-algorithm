@@ -1,6 +1,8 @@
 package org.example.daily_challenge;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
 
 public class April2024 {
     // 58. Length of Last Word
@@ -61,5 +63,19 @@ public class April2024 {
             }
         }
         return true;
+    }
+
+    // 1614. Maximum Nesting Depth of the Parentheses
+    public int maxDepth(String s) {
+        int depth = 0, max = Integer.MIN_VALUE;
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                depth += 1;
+            } else if (c == ')') {
+                depth -= 1;
+            }
+            max = Math.max(depth, max);
+        }
+        return max == Integer.MIN_VALUE ? 0 : max;
     }
 }
