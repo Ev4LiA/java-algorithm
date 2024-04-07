@@ -2,13 +2,15 @@ package org.example;
 
 import org.example.biweekly_contest.Contest127;
 import org.example.daily_challenge.April2024;
+import org.example.sliding_window.SlidingWindow;
 import org.example.weekly_contest.Contest391;
+import org.example.weekly_contest.Contest392;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        April2024 problem = new April2024();
+        Contest392 problem = new Contest392();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -19,14 +21,14 @@ public class Main {
         String order = "cba";
         String s = "abcd";
 
-//        int[] nums = {16, 1, 2, 20, 32, 40};
         int[] freq = {3, 2, -3, 1};
-        String s1 = "aaaa";
+        String s1 = "xaxcd";
         char c = 't';
-        int[] nums = {0,1,1,1,0,1};
+        int[] nums = {1,1,1};
         int[][] arrays = {{3,10},{5,15},{10,2},{4,4}};
-        s = "   fly me   to   the moon  ";
-        System.out.println(problem.lengthOfLastWord(s));
+        s = "ADOBECODEBANC";
+        String t = "ABC";
+        System.out.println(problem.minOperationsToMakeMedianK(nums, 1000000000));
 //        System.out.println(3 | 3);
 
         // System out Array

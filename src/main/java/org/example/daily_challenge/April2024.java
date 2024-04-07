@@ -65,6 +65,86 @@ public class April2024 {
         return true;
     }
 
+    // 1249. Minimum Remove to Make Valid Parentheses
+    /* ---- Stack Method ---- */
+    public String minRemoveToMakeValid(String s) {
+        Stack<Integer> stack = new Stack<>();
+        char[] arr = s.toCharArray();
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == '(') {
+                stack.push(i);
+            } else if (arr[i] == ')') {
+                if (stack.isEmpty()) {
+                    arr[i] = '0';
+                } else {
+                    stack.pop();
+                }
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            int i = stack.pop();
+            arr[i] = '0';
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char c : arr) {
+            if (c != '0') sb.append(c);
+        }
+        return sb.toString();
+    }
+    /* ---- Iterator Method ---- */
+    public String minRemoveToMakeValidII(String s) {
+        int count = 0;
+        char[] arr = s.toCharArray();
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == '(') {
+                count++;
+            } else if (arr[i] == ')') {
+                if (count == 0) {
+                    arr[i] = '0';
+                } else {
+                    count--;
+                }
+            }
+        }
+        count = 0;
+        for (int i = arr.length - 1; i>= 0; i--) {
+            if (arr[i] == ')') {
+                count++;
+            } else if (arr[i] == '(') {
+                if (count == 0) {
+                    arr[i] = '0';
+                } else {
+                    count--;
+                }
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != '0') sb.append(arr[i]);
+        }
+        return sb.toString();
+    }
+
+    // 1544. Make The String Great
+    public String makeGood(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (!stack.isEmpty() && Math.abs(c - stack.peek()) == 32) {
+                stack.pop();
+            } else {
+                stack.push(c);
+            }
+        }
+        String res = "";
+        while (!stack.isEmpty()) {
+            res = stack.pop() + res;
+        }
+        return res;
+    }
+
     // 1614. Maximum Nesting Depth of the Parentheses
     public int maxDepth(String s) {
         int depth = 0, max = Integer.MIN_VALUE;

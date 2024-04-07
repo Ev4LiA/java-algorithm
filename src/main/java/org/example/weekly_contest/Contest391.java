@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Contest391 {
-    // Harshad Number
+    // 3099. Harshad Number
     public int sumOfTheDigitsOfHarshadNumber(int x) {
         int sum = 0, tempx = x;
         while (tempx != 0) {
@@ -14,7 +14,7 @@ public class Contest391 {
         return x % sum == 0 ? sum : -1;
     }
 
-    // Water Bottles II
+    // 3100. Water Bottles II
     public int maxBottlesDrunk(int numBottles, int numExchange) {
         int res = numBottles, emptyBottles = numBottles;
 
@@ -26,7 +26,7 @@ public class Contest391 {
         return res;
     }
 
-    //  Count Alternating Subarrays
+    // 3101. Count Alternating Subarrays
     public long countAlternatingSubarrays(int[] nums) {
         long res = 0;
         int l = 0, r = 1, n = nums.length;
@@ -49,33 +49,50 @@ public class Contest391 {
         return res += n;
     }
 
-    //  Minimize Manhattan Distances
+    // 3102. Minimize Manhattan Distances
     public int minimumDistance(int[][] points) {
-        int n = points.length;
-        List<List<Integer>> dp = new ArrayList<>();
-        int index = 0;
-        int max = Integer.MIN_VALUE;
-        int farthest1 = 0, farthest2 = 0;
+        int[] m = maximumManhattanDistance(points, -1);
+        int[] m1 = maximumManhattanDistance(points, m[0]);
+        int[] m2 = maximumManhattanDistance(points, m[1]);
 
-        for (int j = 0; j < n - 1; j++) {
-            List<Integer> list = new ArrayList<>();
-            for (int k = j + 1; k < n; k++) {
-                int distance = Math.abs(points[j][0] - points[k][0]) + Math.abs(points[j][1] - points[k][1]);
-                list.add(distance);
-                if (distance >= max) {
-                    farthest1 = j;
-                    farthest2 = k;
-                    max = distance;
+        return Math.min(manhattanDistance(points, m1[0], m1[1]), manhattanDistance(points, m2[0], m2[1]));
+    }
+
+    private int manhattanDistance(int[][] points, int i, int j) {
+        return Math.abs(points[i][0] - points[j][0]) + Math.abs(points[i][1] - points[j][1]);
+    }
+
+    private int[] maximumManhattanDistance(int[][] points, int remove) {
+        int maxSum = Integer.MIN_VALUE, minSum = Integer.MAX_VALUE, maxDiff = Integer.MIN_VALUE, minDiff = Integer.MAX_VALUE;
+        int maxSumIndex = -1, minSumIndex = -1, maxDiffIndex = -1, minDiffIndex = -1;
+
+        for (int i = 0; i < points.length; i++) {
+            if (i != remove) {
+                int sum = points[i][0] + points[i][1];
+                int diff = points[i][0] - points[i][1];
+
+                if (maxSum < sum) {
+                    maxSum = sum;
+                    maxSumIndex = i;
+                }
+
+                if (minSum > sum) {
+                    minSum = sum;
+                    minSumIndex = i;
+                }
+
+                if (maxDiff < diff) {
+                    maxDiff = diff;
+                    maxDiffIndex = i;
+                }
+
+                if (minDiff > diff) {
+                    minDiff = diff;
+                    minDiffIndex = i;
                 }
             }
-            dp.add(list);
         }
-        int min = max;
 
-        int maxTemp1 = 0, maxTemp2 = 0;
-
-        min = Math.min(min, Math.min(maxTemp1, maxTemp2));
-
-        return min;
+        return (maxSum - minSum) > (maxDiff - minDiff) ? new int[]{maxSumIndex, minSumIndex} : new int[]{maxDiffIndex, minDiffIndex};
     }
 }
