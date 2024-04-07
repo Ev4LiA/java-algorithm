@@ -3,7 +3,7 @@ package org.example.weekly_contest;
 import java.util.Arrays;
 
 public class Contest392 {
-    // Longest Strictly Increasing or Strictly Decreasing Subarray
+    // 3105. Longest Strictly Increasing or Strictly Decreasing Subarray
     public int longestMonotonicSubarray(int[] nums) {
         int down = 1, up = 1;
         int startDown = 0, startUp = 0, endDown = 0, endUp = 0;
@@ -30,7 +30,7 @@ public class Contest392 {
         return Math.max(down, up);
     }
 
-    // Lexicographically Smallest String After Operations With Constraint
+    // 3106. Lexicographically Smallest String After Operations With Constraint
     public String getSmallestString(String s, int k) {
         if (k == 0) return s;
         char[] arr = s.toCharArray();
@@ -58,7 +58,7 @@ public class Contest392 {
         return new String(arr);
     }
 
-    //  Minimum Operations to Make Median of Array Equal to K
+    // 3107. Minimum Operations to Make Median of Array Equal to K
     public long minOperationsToMakeMedianK(int[] nums, int k) {
         Arrays.sort(nums);
         long res = 0;
@@ -82,7 +82,7 @@ public class Contest392 {
         return res;
     }
 
-    // Minimum Cost Walk in Weighted Graph
+    // 3108. Minimum Cost Walk in Weighted Graph
     public int[] minimumCost(int n, int[][] edges, int[][] query) {
         return null;
     }

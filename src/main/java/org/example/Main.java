@@ -10,7 +10,7 @@ import org.example.weekly_contest.Contest392;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Contest392 problem = new Contest392();
+        April2024 problem = new April2024();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -27,8 +27,8 @@ public class Main {
         int[] nums = {1,1,1};
         int[][] arrays = {{3,10},{5,15},{10,2},{4,4}};
         s = "ADOBECODEBANC";
-        String t = "ABC";
-        System.out.println(problem.minOperationsToMakeMedianK(nums, 1000000000));
+        String t = "(*))";
+        System.out.println(problem.checkValidString(t));
 //        System.out.println(3 | 3);
 
         // System out Array

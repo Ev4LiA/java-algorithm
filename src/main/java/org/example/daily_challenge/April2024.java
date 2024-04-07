@@ -65,6 +65,58 @@ public class April2024 {
         return true;
     }
 
+    // 678. Valid Parenthesis String
+    /* ---- Stack Method ---- */
+    public boolean checkValidString(String s) {
+        Stack<Integer> stack = new Stack<>();
+        Stack<Integer> star = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                stack.push(i);
+            } else if (s.charAt(i) == '*') {
+                star.push(i);
+            } else {
+                if (stack.isEmpty() && star.isEmpty()) {
+                    return false;
+                } else if (!stack.isEmpty()) {
+                    stack.pop();
+                } else {
+                    star.pop();
+                }
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            if (star.isEmpty()) return false;
+            if (stack.peek() > star.peek()) return false;
+            stack.pop();
+            star.pop();
+        }
+        return true;
+    }
+
+    /* ---- Two Pointer Method ---- */
+    public boolean checkValidStringII(String s) {
+        int minLeft = 0, maxLeft = 0;
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                minLeft++; maxLeft++;
+            } else if (c == ')') {
+                minLeft--; maxLeft--;
+            } else {
+                minLeft--; maxLeft++;
+            }
+
+            if (maxLeft < 0) {
+                return false;
+            } else if (minLeft < 0) {
+                minLeft = 0;
+            }
+        }
+
+        return minLeft == 0;
+    }
+
     // 1249. Minimum Remove to Make Valid Parentheses
     /* ---- Stack Method ---- */
     public String minRemoveToMakeValid(String s) {
