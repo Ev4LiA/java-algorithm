@@ -1,8 +1,6 @@
 package org.example.daily_challenge;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class April2024 {
     // 58. Length of Last Word
@@ -209,5 +207,35 @@ public class April2024 {
             max = Math.max(depth, max);
         }
         return max == Integer.MIN_VALUE ? 0 : max;
+    }
+
+    // 1700. Number of Students Unable to Eat Lunch
+    public int countStudents(int[] students, int[] sandwiches) {
+        int student0 = 0, student1 = 0;
+        for (int student : students) {
+            if (student == 0) {
+                student0++;
+            } else {
+                student1++;
+            }
+        }
+
+        for (int sandwich : sandwiches) {
+            if (sandwich == 0) {
+                if (student0 > 0) {
+                    student0--;
+                } else {
+                    return student1;
+                }
+            } else {
+                if (student1 > 0) {
+                    student1--;
+                } else {
+                    return student0;
+                }
+            }
+        }
+
+        return 0;
     }
 }
