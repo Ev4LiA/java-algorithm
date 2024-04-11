@@ -24,11 +24,11 @@ public class Main {
         int[] freq = {3, 2, -3, 1};
         String s1 = "xaxcd";
         char c = 't';
-        int[] nums = {1,1,1};
+        int[] nums = {4, 2, 3, 5};
         int[][] arrays = {{3,10},{5,15},{10,2},{4,4}};
         s = "ADOBECODEBANC";
         String t = "(*))";
-        System.out.println(problem.checkValidString(t));
+        System.out.println(problem.removeKdigits("52374333400072837283091820", 6));
 //        System.out.println(3 | 3);
 
         // System out Array

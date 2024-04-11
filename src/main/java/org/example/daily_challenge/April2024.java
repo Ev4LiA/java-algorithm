@@ -63,6 +63,36 @@ public class April2024 {
         return true;
     }
 
+    // 402. Remove K Digits
+    public String removeKdigits(String num, int k) {
+        if (k == num.length()) return "0";
+
+        Stack<Character> monoStack = new Stack<>();
+        for (char c : num.toCharArray()) {
+            while (!monoStack.isEmpty() && k > 0 && c < monoStack.peek()) {
+                monoStack.pop();
+                k--;
+            }
+            monoStack.push(c);
+        }
+
+        while (k > 0 && !monoStack.isEmpty()) {
+            monoStack.pop();
+            k--;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (!monoStack.isEmpty()) {
+            sb.insert(0, monoStack.pop());
+        }
+
+        while (!sb.isEmpty() && sb.charAt(0) == '0'){
+            sb.deleteCharAt(0);
+        }
+
+        return !sb.isEmpty() ? sb.toString() : "0";
+    }
+
     // 678. Valid Parenthesis String
     /* ---- Stack Method ---- */
     public boolean checkValidString(String s) {
@@ -98,11 +128,14 @@ public class April2024 {
         int minLeft = 0, maxLeft = 0;
         for (char c : s.toCharArray()) {
             if (c == '(') {
-                minLeft++; maxLeft++;
+                minLeft++;
+                maxLeft++;
             } else if (c == ')') {
-                minLeft--; maxLeft--;
+                minLeft--;
+                maxLeft--;
             } else {
-                minLeft--; maxLeft++;
+                minLeft--;
+                maxLeft++;
             }
 
             if (maxLeft < 0) {
@@ -113,6 +146,24 @@ public class April2024 {
         }
 
         return minLeft == 0;
+    }
+
+    // 950. Reveal Cards In Increasing Order
+    public int[] deckRevealedIncreasing(int[] deck) {
+        int n = deck.length;
+        Arrays.sort(deck);
+        Deque<Integer> queue = new LinkedList<>();
+        queue.addFirst(deck[n - 1]);
+        for (int i = n - 2; i >= 0; i--) {
+            int last = queue.removeLast();
+            queue.addFirst(last);
+            queue.addFirst(deck[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            deck[i] = queue.removeFirst();
+        }
+        return deck;
     }
 
     // 1249. Minimum Remove to Make Valid Parentheses
@@ -143,6 +194,7 @@ public class April2024 {
         }
         return sb.toString();
     }
+
     /* ---- Iterator Method ---- */
     public String minRemoveToMakeValidII(String s) {
         int count = 0;
@@ -159,7 +211,7 @@ public class April2024 {
             }
         }
         count = 0;
-        for (int i = arr.length - 1; i>= 0; i--) {
+        for (int i = arr.length - 1; i >= 0; i--) {
             if (arr[i] == ')') {
                 count++;
             } else if (arr[i] == '(') {
@@ -237,5 +289,23 @@ public class April2024 {
         }
 
         return 0;
+    }
+
+    // 2073. Time Needed to Buy Tickets
+    public int timeRequiredToBuy(int[] tickets, int k) {
+        int n = tickets.length;
+        int ticket = tickets[k];
+        int sold = 0, count = 0, countBefore = k + 1;
+        for (int i = 0; i < n; i++) {
+            if (tickets[i] < ticket) {
+                sold += tickets[i];
+                count++;
+                if (i < k) {
+                    countBefore--;
+                }
+            }
+
+        }
+        return (n - count) * (ticket - 1) + sold + countBefore;
     }
 }
