@@ -101,28 +101,28 @@ public class April2024 {
     }
 
     // 404. Sum of Left Leaves
-//    public int sumOfLeftLeaves(TreeNode root) {
-//        if (root.left == null && root.right == null) {
-//            return 0;
-//        }
-//        int res = 0;
-//        Stack<TreeNode> stack = new Stack<>();
-//        stack.add(root);
-//        while (!stack.isEmpty()) {
-//            TreeNode current = stack.pop();
-//            if (current.left != null) {
-//                if (current.left.left == null && current.left.right == null) {
-//                    res += current.left.val;
-//                } else {
-//                    stack.add(current.left);
-//                }
-//            }
-//            if (current.left == null && current.right == null) {
-//                res += current.val;
-//            } else if
-//
-//        }
-//    }
+    public int sumOfLeftLeaves(TreeNode root) {
+        if (root.left == null && root.right == null) {
+            return 0;
+        }
+        int res = 0;
+        Stack<TreeNode> stack = new Stack<>();
+        stack.add(root);
+        while (!stack.isEmpty()) {
+            TreeNode current = stack.pop();
+            if (current.left != null) {
+                if (current.left.left == null && current.left.right == null) {
+                    res += current.left.val;
+                } else {
+                    stack.add(current.left);
+                }
+            }
+            if (current.right != null) {
+                stack.add(current.right);
+            }
+        }
+        return res;
+    }
 
     // 678. Valid Parenthesis String
     /* ---- Stack Method ---- */
