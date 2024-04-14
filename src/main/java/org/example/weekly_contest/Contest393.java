@@ -1,10 +1,11 @@
 package org.example.weekly_contest;
 
-import java.util.Arrays;
-import java.util.PriorityQueue;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Contest393 {
-    //  Latest Time You Can Obtain After Replacing Characters
+    // 3114. Latest Time You Can Obtain After Replacing Characters
     public String findLatestTime(String s) {
         char[] chars = s.toCharArray();
         if (chars[3] == '?') {
@@ -34,7 +35,7 @@ public class Contest393 {
         return String.valueOf(chars);
     }
 
-    //  Maximum Prime Difference
+    // 3115. Maximum Prime Difference
     public int maximumPrimeDifference(int[] nums) {
         int left = 0, right = 0;
         for (int i = 0; i < nums.length; i++) {
@@ -66,38 +67,116 @@ public class Contest393 {
         return true;
     }
 
-    // Kth Smallest Amount With Single Denomination Combination
+    // 3116. Kth Smallest Amount With Single Denomination Combination
     public long findKthSmallest(int[] coins, int k) {
         int n = coins.length;
-        Arrays.sort(coins);
-        PriorityQueue<Long> pq = new PriorityQueue<>();
-        int[] mul = new int[n];
-        pq.offer((long) coins[0]);
-        mul[0] = coins[0];
-        k--;
+        List<Integer> temp = new ArrayList<>();
 
-        while (k > 0) {
-            int index = findMin(coins, mul, 0);
-            long min = mul[index];
-            if (!pq.isEmpty() && min != pq.peek()) {
-                pq.remove();
-                pq.offer(min);
-                k--;
+        for (int i = 0; i < n; i++) {
+            boolean can = true;
+            for (int j = 0; j < n && can; j++) {
+                if (i != j) {
+                    if (coins[i] % coins[j] == 0) {
+                        can = false;
+                    }
+                }
             }
+            if (can) temp.add(coins[i]);
         }
-        return pq.peek();
+
+        n = temp.size();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = temp.get(i);
+        }
+        long l = 0;
+        long r = Long.MAX_VALUE;
+        boolean qwe = false;
+        while (l <= r) {
+            long m = (r - l) / 2l + l;
+            while (!check(m, arr)) {
+                if (qwe) m++;
+                else m--;
+            }
+            qwe = !qwe;
+
+            long cnt = 0;
+            for (int i = 1; i < (1 << arr.length); i++) {
+                long LCM = 1;
+                int bits = 0;
+                for (int j = 0; j < arr.length; j++) {
+                    if ((i & (1 << j)) == (1 << j)) {
+                        bits++;
+                        LCM = lcm(LCM, arr[j]);
+                    }
+                }
+                if (bits % 2 == 1) cnt += m / LCM;
+                else cnt -= m / LCM;
+            }
+
+            if (cnt > k) r = m - 1;
+            else if (cnt < k) l = m + 1;
+            else return m;
+        }
+
+        return l;
     }
 
-    public int findMin(int[] coins, int[] mul, int index) {
-        long min = mul[index] + coins[index];
-        for (int i = 0; i < coins.length; i++) {
-            if (min >= mul[i] + coins[i] && i != index) {
-                index = i;
-                break;
-            }
+    public long gcd(long a, long b) {
+        while (b > 0) {
+            long c = a;
+            a = b;
+            b = c % b;
+        }
+        return a;
+    }
+
+    public long lcm(long a, long b) {
+        return (a / gcd(a, b)) * b;
+    }
+
+    public boolean check(long x, int[] arr) {
+        for (int y : arr) {
+            if (x % ((long) y) == 0) return true;
+        }
+        return false;
+    }
+
+    // 3117. Minimum Sum of Values by Dividing Array
+    public int minimumValueSum(int[] nums, int[] andValues) {
+        HashMap<Integer, Integer>[][] dp = new HashMap[nums.length][andValues.length];
+
+        int val = recur(0, 0, nums, andValues, 131071, dp);
+
+        if (val >= (int) (1e9)) return -1;
+
+        return val;
+    }
+
+    int recur(int i, int j, int[] nums, int[] andValues, int runningAnd, HashMap<Integer, Integer>[][] dp) {
+
+        if (i == nums.length && j == andValues.length) {
+            return 0;
         }
 
-        mul[index] += coins[index];
-        return index;
+        if (j == andValues.length || i == nums.length) return (int) 1e9;
+
+        if (dp[i][j] != null && dp[i][j].get(runningAnd) != null) {
+            return dp[i][j].get(runningAnd);
+        }
+
+        int newRun = runningAnd & nums[i];
+
+        int tryNew = (int) (1e9);
+        if (newRun == andValues[j]) {
+            tryNew = nums[i] + recur(i + 1, j + 1, nums, andValues, 131071, dp);
+        }
+        int cont = recur(i + 1, j, nums, andValues, newRun, dp);
+
+        if (dp[i][j] == null) {
+            dp[i][j] = new HashMap<>();
+        }
+        dp[i][j].put(runningAnd, Math.min(tryNew, cont));
+        return Math.min(tryNew, cont);
     }
 }
