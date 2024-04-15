@@ -51,6 +51,20 @@ public class April2024 {
         return 0;
     }
 
+    // 129. Sum Root to Leaf Numbers
+    public int sumNumbers(TreeNode root) {
+        return dfs(root, 0);
+    }
+
+    public int dfs(TreeNode root, int res) {
+        if (root == null) return 0;
+        if (root.left == null && root.right == null) return res * 10 + root.val;
+
+        int left = dfs(root.left, res * 10 + root.val);
+        int right = dfs(root.right, res * 10 + root.val);
+        return left + right;
+    }
+
     // 205. Isomorphic Strings
     public boolean isIsomorphic(String s, String t) {
         HashMap<Character, Character> map = new HashMap<>();
