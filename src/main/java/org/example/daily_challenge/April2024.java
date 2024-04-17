@@ -138,6 +138,11 @@ public class April2024 {
         return res;
     }
 
+    // 623. Add One Row to Tree
+    public TreeNode addOneRow(TreeNode root, int val, int depth) {
+        return null;
+    }
+
     // 678. Valid Parenthesis String
     /* ---- Stack Method ---- */
     public boolean checkValidString(String s) {
@@ -209,6 +214,11 @@ public class April2024 {
             deck[i] = queue.removeFirst();
         }
         return deck;
+    }
+
+    // 988. Smallest String Starting From Leaf
+    public String smallestFromLeaf(TreeNode root) {
+        return null;
     }
 
     // 1249. Minimum Remove to Make Valid Parentheses
