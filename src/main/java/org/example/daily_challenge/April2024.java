@@ -138,6 +138,25 @@ public class April2024 {
         return res;
     }
 
+    // 463. Island Perimeter
+    public int islandPerimeter(int[][] grid) {
+        int res = 0, n = grid.length, m = grid[0].length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == 1) {
+                    res += 4;
+                    if (i - 1 >= 0 && grid[i - 1][j] == 1) {
+                        res-=2;
+                    }
+                    if (j - 1 >= 0 && grid[i][j - 1] == 1) {
+                        res-=2;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
     // 623. Add One Row to Tree
     public TreeNode addOneRow(TreeNode root, int val, int depth) {
         return null;
