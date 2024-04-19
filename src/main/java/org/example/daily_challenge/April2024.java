@@ -65,6 +65,38 @@ public class April2024 {
         return left + right;
     }
 
+    // 200. Number of Islands
+    public int numIslands(char[][] grid) {
+        Stack<int[]> stack = new Stack<>();
+        int count = 0, m = grid.length, n = grid[0].length;
+        int[] direction = new int[]{0, 1, 0, -1, 0};
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '1') {
+                    stack.push(new int[]{i, j});
+                    while (!stack.isEmpty()) {
+                        int[] pos = stack.pop();
+                        int row = pos[0], col = pos[1];
+                        grid[row][col] = '0';
+
+                        for (int k = 0; k < direction.length - 1; k++) {
+                            int newRow = row + direction[k], newCol = col + direction[k + 1];
+                            if (newRow < 0 || newRow >= m || newCol < 0 || newCol >= n || grid[newRow][newCol] == '0') {
+                                continue;
+                            } else {
+                                stack.push(new int[]{newRow, newCol});
+                            }
+                        }
+                    }
+
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     // 205. Isomorphic Strings
     public boolean isIsomorphic(String s, String t) {
         HashMap<Character, Character> map = new HashMap<>();
