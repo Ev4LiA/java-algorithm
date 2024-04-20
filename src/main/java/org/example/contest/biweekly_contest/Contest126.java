@@ -1,4 +1,4 @@
-package org.example.biweekly_contest;
+package org.example.contest.biweekly_contest;
 
 import java.util.ArrayList;
 import java.util.Collections;

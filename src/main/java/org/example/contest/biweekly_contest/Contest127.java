@@ -1,4 +1,4 @@
-package org.example.biweekly_contest;
+package org.example.contest.biweekly_contest;
 
 public class Contest127 {
     private static final int MAX_BITS = 63;
