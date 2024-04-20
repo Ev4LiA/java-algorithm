@@ -12,7 +12,7 @@ import org.example.weekly_contest.Contest393;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Contest393 problem = new Contest393();
+        April2024 problem = new April2024();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -27,17 +27,25 @@ public class Main {
         String s1 = "xaxcd";
         char c = 't';
         int[] nums = {10, 9, 7};
-        int[][] arrays = {{0,0},{1,1},{2,2},{3,3},{4,4},{5,5},{6,6}};
+//        int[][] arrays = {{1,0,0},{0,1,1},{0,1,1}};
+        int[][] arrays = {{1,1,0,0,0,1},{1,1,0,0,0,0}};
         s = "ADOBECODEBANC";
         String t = "(*))";
-        System.out.println(problem.findKthSmallest(nums, 3));
+//        System.out.println(problem.findFarmland(arrays));
 //        System.out.println(3 | 3);
 
         // System out Array
-//        System.out.print("Array elements: ");
-//        long[] res = problem.mostFrequentIDs(nums, freq);
+        System.out.print("Array elements: \n");
+        int[][] res = problem.findFarmland(arrays);
 //        for (int i = 0; i < res.length; i++) {
 //            System.out.print(res[i] + " ");
 //        }
+
+        for (int i = 0; i < res.length; i++) {
+            for (int j = 0; j < res[0].length; j++) {
+                System.out.print(res[i][j] + " ");
+            }
+            System.out.println("\n");
+        }
     }
 }

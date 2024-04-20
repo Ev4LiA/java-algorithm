@@ -397,6 +397,40 @@ public class April2024 {
         return 0;
     }
 
+    // 1992. Find All Groups of Farmland
+    public int[][] findFarmland(int[][] land) {
+        int m = land.length, n = land[0].length;
+        List<int[]> res = new ArrayList<>();
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (land[i][j] == 1) {
+                    int[] farm = new int[4];
+                    farm[0] = i;
+                    farm[1] = j;
+
+                    int row = i, col = j;
+                    while (row < m && land[row][j] == 1) row++;
+                    while (col < n && land[i][col] == 1) col++;
+                    farm[2] = row - 1;
+                    farm[3] = col - 1;
+                    res.add(farm);
+
+                    for (int k = i; k < row; k++) {
+                        for (int g = j; g < col; g++) {
+                            land[k][g] = 0;
+                        }
+                    }
+                }
+            }
+        }
+        int[][] array = new int[res.size()][];
+        for (int i = 0; i < res.size(); i++) {
+            array[i] = res.get(i);
+        }
+        return array;
+    }
+
     // 2073. Time Needed to Buy Tickets
     public int timeRequiredToBuy(int[] tickets, int k) {
         int n = tickets.length;
