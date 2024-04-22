@@ -139,7 +139,7 @@ public class April2024 {
             sb.insert(0, monoStack.pop());
         }
 
-        while (!sb.isEmpty() && sb.charAt(0) == '0'){
+        while (!sb.isEmpty() && sb.charAt(0) == '0') {
             sb.deleteCharAt(0);
         }
 
@@ -178,10 +178,10 @@ public class April2024 {
                 if (grid[i][j] == 1) {
                     res += 4;
                     if (i - 1 >= 0 && grid[i - 1][j] == 1) {
-                        res-=2;
+                        res -= 2;
                     }
                     if (j - 1 >= 0 && grid[i][j - 1] == 1) {
-                        res-=2;
+                        res -= 2;
                     }
                 }
             }
@@ -247,6 +247,52 @@ public class April2024 {
         }
 
         return minLeft == 0;
+    }
+
+    // 752. Open the Lock
+    class Pair {
+        String key;
+        int value;
+
+        public Pair(String key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+    public int openLock(String[] deadends, String target) {
+        Set<String> set = new HashSet<>(Arrays.asList(deadends));
+        if (set.contains("0000") || set.contains(target)) {
+            return -1;
+        }
+        if (target.equals("0000")) {
+            return 0;
+        }
+        Queue<Pair> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+        queue.offer(new Pair("0000", 0));
+        visited.add("0000");
+
+        while (!queue.isEmpty()) {
+            Pair cur = queue.poll();
+            String key = cur.key;
+            int moves = cur.value;
+
+            if (key.equals(target)) {
+                return moves;
+            }
+
+            // Create new combination
+            for (int i = 0; i < 4; i++) {
+                for (int j : new int[]{1, -1}) {
+                    int newDigit = (key.charAt(i) - '0' + j + 10) % 10;
+                    String newCombination = key.substring(0, i) + newDigit + key.substring(i + 1);
+                    if (!visited.contains(newCombination) && !set.contains(newCombination)) {
+                        queue.offer(new Pair(newCombination, moves + 1));
+                    }
+                }
+            }
+        }
+        return -1;
     }
 
     // 950. Reveal Cards In Increasing Order
@@ -395,6 +441,130 @@ public class April2024 {
         }
 
         return 0;
+    }
+
+    // 1971. Find if Path Exists in Graph
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        for (int[] edge : edges) {
+            int u = edge[0], v = edge[1];
+            graph.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
+            graph.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
+        }
+
+        Set<Integer> visited = new HashSet<>();
+        return validatePathDFS(graph, source, destination, visited);
+    }
+
+    /* ---- DFS Method ---- */
+    private boolean validatePathDFS(Map<Integer, List<Integer>> graph, int node, int destination, Set<Integer> visited) {
+        if (node == destination) return true;
+
+        visited.add(node);
+        List<Integer> neighbor = graph.getOrDefault(node, new ArrayList<>());
+        for (Integer n : neighbor) {
+            if (!visited.contains(n)) {
+                if (validatePathDFS(graph, n, destination, visited)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /* ---- BFS Method ---- */
+    private boolean validatePathBFS(Map<Integer, List<Integer>> graph, int node, int destination, Set<Integer> visited) {
+        visited.add(node);
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(node);
+
+        while (!queue.isEmpty()) {
+            int cur = queue.poll();
+            if (cur == destination) return true;
+            List<Integer> neighbor = graph.getOrDefault(cur, new ArrayList<>());
+            for (Integer n : neighbor) {
+                if (!visited.contains(n)) {
+                    visited.add(n);
+                    queue.offer(n);
+                }
+            }
+        }
+        return false;
+    }
+
+    /* ---- Standard Graph Algorithms Method ---- */
+    private boolean validatePathDijikstra(int n, Map<Integer, List<Integer>> graph, int source, int destination) {
+        int[] distances = new int[n];
+        Arrays.fill(distances, Integer.MAX_VALUE);
+        distances[source] = 0;
+
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+        queue.add(new int[]{source, 0});
+
+        while (!queue.isEmpty()) {
+            int[] node = queue.poll();
+            int cur = node[0];
+            int distance = node[1];
+
+            if (cur == destination) return true;
+            if (distance > distances[cur]) continue;
+
+            List<Integer> neighbors = graph.getOrDefault(cur, new ArrayList<>());
+            for (Integer neighbor : neighbors) {
+                int newDistance = distance + 1;
+                if (newDistance < distances[neighbor]) {
+                    distances[neighbor] = newDistance;
+                    queue.offer(new int[]{neighbor, newDistance});
+                }
+            }
+        }
+        return false;
+    }
+
+    /* ---- Union-Find (Disjoint Set Union) Method ---- */
+    private int[] parent;
+    private int[] rank;
+
+    public boolean validatePathUnionFind(int n, int[][] edges, int source, int destination) {
+        parent = new int[n];
+        rank = new int[n];
+
+        // Initialize parent pointers and ranks
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+            rank[i] = 1;
+        }
+
+        // Union-find operations based on given edges
+        for (int[] edge : edges) {
+            union(edge[0], edge[1]);
+        }
+
+        // Check if source and destination belong to the same set
+        return find(source) == find(destination);
+    }
+
+    private int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]); // Path compression
+        }
+        return parent[x];
+    }
+
+    private void union(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+
+        if (rootX != rootY) {
+            if (rank[rootX] > rank[rootY]) {
+                parent[rootY] = rootX;
+            } else if (rank[rootX] < rank[rootY]) {
+                parent[rootX] = rootY;
+            } else {
+                parent[rootY] = rootX;
+                rank[rootX]++;
+            }
+        }
     }
 
     // 1992. Find All Groups of Farmland

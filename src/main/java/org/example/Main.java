@@ -1,12 +1,13 @@
 package org.example;
 
+import org.example.contest.weekly_contest.Contest394;
 import org.example.daily_challenge.April2024;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        April2024 problem = new April2024();
+        Contest394 problem = new Contest394();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -23,23 +24,24 @@ public class Main {
         int[] nums = {10, 9, 7};
 //        int[][] arrays = {{1,0,0},{0,1,1},{0,1,1}};
         int[][] arrays = {{1,1,0,0,0,1},{1,1,0,0,0,0}};
-        s = "ADOBECODEBANC";
+        s = "aaAbcBC";
         String t = "(*))";
-//        System.out.println(problem.findFarmland(arrays));
+        int[][] edges = {{0,1},{0,2},{3,5},{5,4},{4,3}};
+        System.out.println(problem.numberOfSpecialCharsII(s));
 //        System.out.println(3 | 3);
 
         // System out Array
         System.out.print("Array elements: \n");
-        int[][] res = problem.findFarmland(arrays);
+//        int[][] res = problem.findFarmland(arrays);
 //        for (int i = 0; i < res.length; i++) {
 //            System.out.print(res[i] + " ");
 //        }
 
-        for (int i = 0; i < res.length; i++) {
-            for (int j = 0; j < res[0].length; j++) {
-                System.out.print(res[i][j] + " ");
-            }
-            System.out.println("\n");
-        }
+//        for (int i = 0; i < res.length; i++) {
+//            for (int j = 0; j < res[0].length; j++) {
+//                System.out.print(res[i][j] + " ");
+//            }
+//            System.out.println("\n");
+//        }
     }
 }
