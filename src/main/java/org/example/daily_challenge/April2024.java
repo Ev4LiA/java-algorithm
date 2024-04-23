@@ -116,6 +116,49 @@ public class April2024 {
         return true;
     }
 
+    // 310. Minimum Height Trees
+    public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+        List<Integer> res = new ArrayList<>();
+        if (n == 1) {
+            res.add(0);
+            return res;
+        }
+
+        int[] indegree = new int[n];
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        for (int[] edge : edges) {
+            int u = edge[0], v = edge[1];
+            indegree[u]++;
+            indegree[v]++;
+            graph.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
+            graph.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
+        }
+
+        // Add Leaf Node into queue
+        Queue<Integer> leaves = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            if (indegree[i] == 1) leaves.add(i);
+        }
+
+        int processed = 0;
+        while (n - processed > 2) {
+            int size = leaves.size();
+            for (int i = 0; i < size; i++) {
+                int leaf = leaves.poll();
+                List<Integer> neighbors = graph.get(leaf);
+                for (Integer neighbor : neighbors) {
+                    if (--indegree[neighbor] == 1) {
+                        leaves.add(neighbor);
+                    }
+                }
+                processed++;
+            }
+        }
+
+        res.addAll(leaves);
+        return res;
+    }
+
     // 402. Remove K Digits
     public String removeKdigits(String num, int k) {
         if (k == num.length()) return "0";
