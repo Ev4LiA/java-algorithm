@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.contest.biweekly_contest.Contest129;
 import org.example.contest.weekly_contest.Contest394;
 import org.example.daily_challenge.April2024;
 
@@ -7,7 +8,7 @@ import org.example.daily_challenge.April2024;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Contest394 problem = new Contest394();
+        Contest129 problem = new Contest129();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -26,8 +27,8 @@ public class Main {
         int[][] arrays = {{1,1,0,0,0,1},{1,1,0,0,0,0}};
         s = "aaAbcBC";
         String t = "(*))";
-        int[][] edges = {{0,1},{0,2},{3,5},{5,4},{4,3}};
-        System.out.println(problem.numberOfSpecialCharsII(s));
+        int[][] edges = {{0,1,0},{0,1,1},{0,1,0}};
+        System.out.println(problem.numberOfRightTriangles(edges));
 //        System.out.println(3 | 3);
 
         // System out Array

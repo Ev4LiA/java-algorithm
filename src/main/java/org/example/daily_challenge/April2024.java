@@ -232,6 +232,11 @@ public class April2024 {
         return res;
     }
 
+    // 514. Freedom Trail
+    public int findRotateSteps(String ring, String key) {
+        return 0;
+    }
+
     // 623. Add One Row to Tree
     public TreeNode addOneRow(TreeNode root, int val, int depth) {
         return null;
