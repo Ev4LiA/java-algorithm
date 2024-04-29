@@ -2,13 +2,14 @@ package org.example;
 
 import org.example.contest.biweekly_contest.Contest129;
 import org.example.contest.weekly_contest.Contest394;
+import org.example.contest.weekly_contest.Contest395;
 import org.example.daily_challenge.April2024;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Contest129 problem = new Contest129();
+        Contest395 problem = new Contest395();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -28,7 +29,13 @@ public class Main {
         s = "aaAbcBC";
         String t = "(*))";
         int[][] edges = {{0,1,0},{0,1,1},{0,1,0}};
-        System.out.println(problem.numberOfRightTriangles(edges));
+
+        int[] nums1 = {4,6,3,1,4,2,10,9,5};
+        int[] nums2 = {5,10,3,2,6,1,9};
+
+//        int[] nums1 = {4,20,16,12,8};
+//        int[] nums2 = {14,18,10};
+        System.out.println(problem.minimumAddedInteger(nums1, nums2));
 //        System.out.println(3 | 3);
 
         // System out Array

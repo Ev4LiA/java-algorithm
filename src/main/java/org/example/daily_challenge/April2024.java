@@ -343,6 +343,48 @@ public class April2024 {
         return -1;
     }
 
+    // 834. Sum of Distances in Tree
+    private Map<Integer, List<Integer>> graph834;
+    // The number of nodes in the subtree where root is Node ith
+    private int[] count;
+    // The sum of distances of all nodes in subtree where root is Node ith
+    private int[] res;
+
+    private void dfs(int node, int parent) {
+        for (int child : graph834.get(node)) {
+            if (child != parent) {
+                dfs(child, node);
+                count[node] += count[child];
+                res[node] += res[child] + count[child];
+            }
+        }
+    }
+
+    private void dfs2(int node, int parent) {
+        for (int child : graph834.get(node)) {
+            if (child != parent) {
+                res[child] = res[node] - count[child] + (count.length - count[child]);
+                dfs2(child, node);
+            }
+        }
+    }
+
+    public int[] sumOfDistancesInTree(int n, int[][] edges) {
+        graph834 = new HashMap<>();
+        count = new int[n];
+        res = new int[n];
+
+        for (int[] edge : edges) {
+            int u = edge[0], v = edge[1];
+            graph834.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
+            graph834.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
+        }
+
+        dfs(0, -1);
+        dfs2(0, -1);
+        return count;
+    }
+
     // 950. Reveal Cards In Increasing Order
     public int[] deckRevealedIncreasing(int[] deck) {
         int n = deck.length;
@@ -684,5 +726,22 @@ public class April2024 {
 
         }
         return (n - count) * (ticket - 1) + sold + countBefore;
+    }
+
+    // 2997. Minimum Number of Operations to Make Array XOR Equal to K
+    public int minOperations(int[] nums, int k) {
+        int finalXor = 0, count = 0;
+        for (int num : nums) {
+            finalXor = finalXor ^ num;
+        }
+
+        while (k > 0 || finalXor > 0) {
+            if (k % 2 != finalXor % 2) {
+                count++;
+            }
+            k /= 2;
+            finalXor /= 2;
+        }
+        return count;
     }
 }
