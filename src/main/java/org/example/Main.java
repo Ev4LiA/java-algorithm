@@ -9,7 +9,7 @@ import org.example.daily_challenge.April2024;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Contest395 problem = new Contest395();
+        April2024 problem = new April2024();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -35,7 +35,7 @@ public class Main {
 
 //        int[] nums1 = {4,20,16,12,8};
 //        int[] nums2 = {14,18,10};
-        System.out.println(problem.minimumAddedInteger(nums1, nums2));
+        System.out.println(problem.wonderfulSubstrings("abcdefghij"));
 //        System.out.println(3 | 3);
 
         // System out Array

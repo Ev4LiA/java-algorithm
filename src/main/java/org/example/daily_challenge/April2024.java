@@ -552,6 +552,31 @@ public class April2024 {
         return 0;
     }
 
+    // 1915. Number of Wonderful Substrings
+    public long wonderfulSubstrings(String word) {
+        long res = 0;
+        int prefixXor = 0;
+
+        // Store the occurence of prefix Xor
+        long[] count = new long[1024];
+        count[prefixXor] = 1;
+
+        for (char ch : word.toCharArray()) {
+            // Using bit to representing the character
+            int charIndex = ch - 'a';
+            prefixXor ^= 1 << charIndex;
+            res += count[prefixXor];
+
+            // We flip a bit in the prefix_xor (means we remove one character),
+            // We use 10 because the problem limit it in first 10 alphabet characters
+            for (int i = 0; i < 10; i++) {
+                res += count[prefixXor ^ (1 << i)];
+            }
+            count[prefixXor]++;
+        }
+        return res;
+    }
+
     // 1971. Find if Path Exists in Graph
     public boolean validPath(int n, int[][] edges, int source, int destination) {
         Map<Integer, List<Integer>> graph = new HashMap<>();
@@ -726,6 +751,26 @@ public class April2024 {
 
         }
         return (n - count) * (ticket - 1) + sold + countBefore;
+    }
+
+    // 2859. Sum of Values at Indices With K Set Bits
+    public int sumIndicesWithKSetBits(List<Integer> nums, int k) {
+        int sum = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if (countSetBits(i) == k) {
+                sum += nums.get(i);
+            }
+        }
+        return sum;
+    }
+
+    private int countSetBits(Integer num) {
+        int count = 0;
+        while (num > 0) {
+            count += num & 1;
+            num = num >> 1;
+        }
+        return count;
     }
 
     // 2997. Minimum Number of Operations to Make Array XOR Equal to K
