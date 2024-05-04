@@ -20,6 +20,16 @@ public class May2024 {
         return 0;
     }
 
+    // 881. Boats to Save People
+    public int numRescueBoats(int[] people, int limit) {
+        Arrays.sort(people);
+        int i = 0, j = people.length - 1;
+        for (; i <= j; j--) {
+            if (people[i] + people[j] <= limit) i++;
+        }
+        return people.length - 1 - j;
+    }
+
     // 2000. Reverse Prefix of Word
     public String reversePrefix(String word, char ch) {
         int index = word.indexOf(ch);
