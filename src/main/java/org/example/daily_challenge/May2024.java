@@ -1,5 +1,7 @@
 package org.example.daily_challenge;
 
+import org.example.utilities.ListNode;
+
 import java.util.Arrays;
 
 public class May2024 {
@@ -18,6 +20,12 @@ public class May2024 {
             }
         }
         return 0;
+    }
+
+    // 237. Delete Node in a Linked List
+    public void deleteNode(ListNode node) {
+        node.val = node.next.val;
+        node.next = node.next.next;
     }
 
     // 881. Boats to Save People
