@@ -2,7 +2,9 @@ package org.example.daily_challenge;
 
 import org.example.utilities.ListNode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class May2024 {
     // 165. Compare Version Numbers
@@ -64,5 +66,42 @@ public class May2024 {
             }
         }
         return -1;
+    }
+
+    // 2487. Remove Nodes From Linked List
+    public ListNode removeNodes(ListNode head) {
+        List<Integer> valList = new ArrayList<>();
+        ListNode curr = head;
+        while (curr != null) {
+            valList.add(curr.val);
+            curr = curr.next;
+        }
+
+        boolean[] deleted = new boolean[valList.size()];
+        int maxValue = Integer.MIN_VALUE;
+        for (int j = valList.size() - 1; j >= 0; j--) {
+            if (valList.get(j) >= maxValue) {
+                maxValue = valList.get(j);
+                deleted[j] = false;
+            } else {
+                deleted[j] = true;
+            }
+        }
+
+        ListNode fakeHead = new ListNode(10000, head);
+        ListNode prev = fakeHead;
+        curr = head;
+        int i = 0;
+        while (curr != null) {
+            if (deleted[i]) {
+                curr = curr.next;
+                prev.next = curr;
+            } else {
+                prev = prev.next;
+                curr = curr.next;
+            }
+            i++;
+        }
+        return fakeHead.next;
     }
 }
