@@ -2,9 +2,7 @@ package org.example.daily_challenge;
 
 import org.example.utilities.ListNode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class May2024 {
     // 165. Compare Version Numbers
@@ -28,6 +26,31 @@ public class May2024 {
     public void deleteNode(ListNode node) {
         node.val = node.next.val;
         node.next = node.next.next;
+    }
+
+    // 506. Relative Ranks
+    public String[] findRelativeRanks(int[] score) {
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> b[1] - a[1]);
+
+        for (int i = 0; i < score.length; i++) {
+            queue.add(new int[]{i, score[i]});
+        }
+        int count = 0;
+        String[] res = new String[score.length];
+        while (!queue.isEmpty()) {
+            int[] arr = queue.poll();
+            if (count == 0) {
+                res[arr[0]] = "Gold Medal";
+            } else if (count == 1) {
+                res[arr[0]] = "Silver Medal";
+            } else if (count == 2) {
+                res[arr[0]] = "Bronze Medal";
+            } else {
+                res[arr[0]] = String.valueOf(count + 1);
+            }
+            count++;
+        }
+        return res;
     }
 
     // 881. Boats to Save People
@@ -103,5 +126,28 @@ public class May2024 {
             i++;
         }
         return fakeHead.next;
+    }
+
+    // 2816. Double a Number Represented as a Linked List
+    public ListNode doubleIt(ListNode head) {
+        Stack<Integer> stack = new Stack<>();
+        ListNode curr = head;
+        int val = 0;
+        while(curr != null) {
+            stack.push(curr.val);
+            curr = curr.next;
+        }
+
+        ListNode newTail = null;
+        while (!stack.isEmpty() || val != 0) {
+            newTail = new ListNode(0, newTail);
+
+            if (!stack.isEmpty()) {
+                val += stack.pop() * 2;
+            }
+            newTail.val = val % 10;
+            val /= 10;
+        }
+        return newTail;
     }
 }
