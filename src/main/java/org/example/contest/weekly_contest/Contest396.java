@@ -1,6 +1,7 @@
 package org.example.contest.weekly_contest;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Contest396 {
     // 3136. Valid Word
@@ -72,6 +73,37 @@ public class Contest396 {
 
     // 3139. Minimum Cost to Equalize Array
     public int minCostToEqualizeArray(int[] nums, int cost1, int cost2) {
+        int max = nums[0], min = nums[0], n = nums.length, mod = 1000000007;
+        long totalSub = 0;
+        for (int a : nums) {
+            max = Math.max(max, a);
+            min = Math.min(min, a);
+            totalSub += a;
+        }
 
+        totalSub = (long) n * max - totalSub;
+
+        // case 1
+        if (cost1 * 2 < cost2 || n <= 2) {
+            return (int) ((totalSub * cost1) % mod);
+        }
+
+        // case 2
+        long op1 = Math.max(0L, (max - min) * 2L - totalSub);
+        long op2 = totalSub - op1;
+        long res = (op1 + op2 % 2) * cost1 + op2 / 2 * cost2;
+
+        // case 3
+        totalSub += op1 / (n - 2) * n;
+        op1 %= (n - 2);
+        op2 = totalSub - op1;
+        res = Math.min(res, (op1 + op2 % 2) * cost1 + op2 / 2 * cost2);
+
+        // case 4
+        for (int i = 0; i < 2; i++) {
+            totalSub += n;
+            res = Math.min(res, totalSub % 2 * cost1 + totalSub / 2 * cost2);
+        }
+        return (int) (res % mod);
     }
 }
