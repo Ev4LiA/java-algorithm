@@ -40,6 +40,38 @@ public class Contest396 {
 
     // 3138. Minimum Length of Anagram Concatenation
     public int minAnagramLength(String s) {
+        int n = s.length();
+        for (int i = 1; i < s.length(); i++) {
+            if (n % i == 0 && checkSubStrLength(s, i)) {
+                return i;
+            }
+        }
+        return n;
+    }
+
+    private boolean checkSubStrLength(String word, int k) {
+        int n = word.length();
+        int[] count = new int[26];
+        for (int i = 0; i < k; i++) {
+            count[word.charAt(i) - 'a']++;
+        }
+
+        for (int i = k; i < n; i += k) {
+            int[] count2 = new int[26];
+            for (int j = i; j < i + k; j++)
+                count2[word.charAt(j) - 'a']++;
+
+            for (int j = 0; j < 26; j++) {
+                if (count[j] != count2[j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // 3139. Minimum Cost to Equalize Array
+    public int minCostToEqualizeArray(int[] nums, int cost1, int cost2) {
 
     }
 }

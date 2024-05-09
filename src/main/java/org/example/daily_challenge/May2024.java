@@ -150,4 +150,19 @@ public class May2024 {
         }
         return newTail;
     }
+
+    // 3075. Maximize Happiness of Selected Children
+    public long maximumHappinessSum(int[] happiness, int k) {
+        long res = 0;
+        int c = 0, n = happiness.length;
+        Arrays.sort(happiness);
+
+        for (int i = n - 1; i >= n - k; i--) {
+            int value = happiness[i] - c++;
+            if (value > 0) {
+                res += value;
+            }
+        }
+        return res;
+    }
 }
