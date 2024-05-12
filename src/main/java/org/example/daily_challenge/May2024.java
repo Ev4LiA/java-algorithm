@@ -93,6 +93,11 @@ public class May2024 {
         return res;
     }
 
+    // 857. Minimum Cost to Hire K Workers
+    public double mincostToHireWorkers(int[] quality, int[] wage, int k) {
+        return 0.0;
+    }
+
     // 881. Boats to Save People
     public int numRescueBoats(int[] people, int limit) {
         Arrays.sort(people);
@@ -113,6 +118,11 @@ public class May2024 {
             String sub = sb.append(word, 0, index + 1).reverse().toString();
             return sub + word.substring(index + 1);
         }
+    }
+
+    // 2373. Largest Local Values in a Matrix
+    public int[][] largestLocal(int[][] grid) {
+        return null;
     }
 
     // 2441. Largest Positive Integer That Exists With Its Negative
@@ -205,4 +215,5 @@ public class May2024 {
         }
         return res;
     }
+
 }
