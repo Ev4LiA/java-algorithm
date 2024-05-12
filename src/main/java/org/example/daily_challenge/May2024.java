@@ -122,7 +122,21 @@ public class May2024 {
 
     // 2373. Largest Local Values in a Matrix
     public int[][] largestLocal(int[][] grid) {
-        return null;
+        int n = grid.length;
+        int[][] res = new int[n - 2][n - 2];
+        for (int i = 1; i < n - 1; i++) {
+            for (int j = 1; j < n - 1; j++) {
+                int max = Integer.MIN_VALUE;
+
+                for(int k = i - 1; k <= i + 1; k++) {
+                    for (int l = j - 1; l <= j + 1; l++) {
+                        max = Math.max(grid[k][l], max);
+                    }
+                }
+                res[i - 1][j - 1] = max;
+            }
+        }
+        return res;
     }
 
     // 2441. Largest Positive Integer That Exists With Its Negative

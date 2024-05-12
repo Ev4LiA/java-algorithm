@@ -80,4 +80,9 @@ public class Contest397 {
         }
         return res;
     }
+
+    // Find the Minimum Cost Array Permutation
+    public int[] findPermutation(int[] nums) {
+        return null;
+    }
 }
