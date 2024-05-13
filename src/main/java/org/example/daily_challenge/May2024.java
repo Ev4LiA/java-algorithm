@@ -98,6 +98,27 @@ public class May2024 {
         return 0.0;
     }
 
+    // 861. Score After Flipping Matrix
+    public int matrixScore(int[][] grid) {
+        int rows = grid.length, cols = grid[0].length;
+        int res = 0;
+        res += (1 << (cols - 1)) * rows;
+
+        for (int j = 1; j < cols; j++) {
+            int val = 1 << (cols - 1 - j);
+            int numOfOne = 0;
+            for (int i = 0; i < rows; i++) {
+                if (grid[i][j] == grid[i][0]) {
+                    numOfOne++;
+                }
+            }
+
+            res += Math.max(numOfOne, rows - numOfOne) * val;
+        }
+
+        return res;
+    }
+
     // 881. Boats to Save People
     public int numRescueBoats(int[] people, int limit) {
         Arrays.sort(people);
