@@ -129,6 +129,39 @@ public class May2024 {
         return people.length - 1 - j;
     }
 
+    // 1219. Path with Maximum Gold
+    public int getMaximumGold(int[][] grid) {
+        int rows = grid.length, cols = grid[0].length;
+        int max = 0;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] != 0) {
+                    max = Math.max(max, dfs(i, j, grid));
+                }
+            }
+        }
+        return max;
+    }
+
+    private int dfs(int row, int col, int[][] grid) {
+        int rows = grid.length, cols = grid[0].length;
+        int[] dir = new int[]{0, 1, 0, -1, 0};
+        if (row < 0 || col < 0 || row >= rows || col >= cols || grid[row][col] == 0) return 0;
+
+        int currentGold = grid[row][col];
+        int localMaxGold = 0;
+        grid[row][col] = 0;
+
+        for (int i = 0; i < 4; i++) {
+            int newX = row + dir[i];
+            int newY = col + dir[i + 1];
+            localMaxGold = Math.max(localMaxGold, currentGold + dfs(newX, newY, grid));
+        }
+        grid[row][col] = currentGold;
+        return localMaxGold;
+    }
+
     // 2000. Reverse Prefix of Word
     public String reversePrefix(String word, char ch) {
         int index = word.indexOf(ch);
@@ -149,7 +182,7 @@ public class May2024 {
             for (int j = 1; j < n - 1; j++) {
                 int max = Integer.MIN_VALUE;
 
-                for(int k = i - 1; k <= i + 1; k++) {
+                for (int k = i - 1; k <= i + 1; k++) {
                     for (int l = j - 1; l <= j + 1; l++) {
                         max = Math.max(grid[k][l], max);
                     }
@@ -218,7 +251,7 @@ public class May2024 {
         Stack<Integer> stack = new Stack<>();
         ListNode curr = head;
         int val = 0;
-        while(curr != null) {
+        while (curr != null) {
             stack.push(curr.val);
             curr = curr.next;
         }
