@@ -246,6 +246,73 @@ public class May2024 {
         return fakeHead.next;
     }
 
+    // 2812. Find the Safest Path in a Grid
+    private final int[] direction = new int[]{0, 1, 0, -1, 0};
+
+    public int maximumSafenessFactor(List<List<Integer>> grid) {
+        int n = grid.size();
+        if (grid.get(0).get(0) == 1 || grid.get(n - 1).get(n - 1) == 1) return 0;
+
+        int[][] score = new int[n][n];
+        int[][] visited = new int[n][n];
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> b[0] - a[0]);
+
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(score[i], Integer.MAX_VALUE);
+        }
+
+        bfs(grid, score, n);
+        pq.offer(new int[]{score[0][0], 0, 0});
+        visited[0][0] = 1;
+
+        while (!pq.isEmpty()) {
+            int[] cell = pq.poll();
+            int safe = cell[0], row = cell[1], col = cell[2];
+
+            if (row == n - 1 && col == n - 1) return safe;
+
+            for (int i = 0; i < 4; i++) {
+                int newRow = row + direction[i];
+                int newCol = col + direction[i + 1];
+                if (newRow >= 0 && newCol >= 0 && newRow < n && newCol < n && visited[newRow][newCol] == 0) {
+                    int s = Math.min(safe, score[newRow][newCol]);
+                    pq.offer(new int[]{s, newRow, newCol});
+                    visited[row][col] = 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    // BFS from the thief to other cell
+    private void bfs(List<List<Integer>> grid, int[][] score, int n) {
+        Queue<int[]> q = new LinkedList<>();
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid.get(i).get(j) == 1) {
+                    score[i][j] = 0;
+                    q.offer(new int[]{i, j});
+                }
+            }
+        }
+
+        while (!q.isEmpty()) {
+            int[] cell = q.poll();
+            int row = cell[0], col = cell[1];
+            int s = score[row][col];
+
+            for (int i = 0; i < 4; i++) {
+                int newRow = row + direction[i];
+                int newCol = col + direction[i + 1];
+                if (newRow >= 0 && newCol >= 0 && newRow < n && newCol < n && score[newRow][newCol] > 1 + s) {
+                    score[newRow][newCol] = 1 + s;
+                    q.offer(new int[]{newRow, newCol});
+                }
+            }
+        }
+    }
+
     // 2816. Double a Number Represented as a Linked List
     public ListNode doubleIt(ListNode head) {
         Stack<Integer> stack = new Stack<>();
