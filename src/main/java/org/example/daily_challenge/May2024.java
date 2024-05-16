@@ -1,6 +1,7 @@
 package org.example.daily_challenge;
 
 import org.example.utilities.ListNode;
+import org.example.utilities.TreeNode;
 
 import java.util.*;
 
@@ -171,6 +172,17 @@ public class May2024 {
             StringBuilder sb = new StringBuilder();
             String sub = sb.append(word, 0, index + 1).reverse().toString();
             return sub + word.substring(index + 1);
+        }
+    }
+
+    // 2331. Evaluate Boolean Binary Tree
+    public boolean evaluateTree(TreeNode root) {
+        if (root.left == null && root.right == null) return root.val == 1;
+
+        if (root.val == 2) {
+            return evaluateTree(root.left) || evaluateTree(root.right);
+        } else {
+            return evaluateTree(root.left) && evaluateTree(root.right);
         }
     }
 
