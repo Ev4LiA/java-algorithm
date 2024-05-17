@@ -163,6 +163,39 @@ public class May2024 {
         return localMaxGold;
     }
 
+    // 1325. Delete Leaves With a Given Value
+    public TreeNode removeLeafNodes(TreeNode root, int target) {
+        root = delete(root, target);
+        return root;
+    }
+
+    private TreeNode delete(TreeNode node, int target) {
+        if (node == null) return null;
+        if (node.val == target) {
+            if (node.left == null && node.right == null) {
+                return null;
+            } else {
+                if (node.left != null) {
+                    node.left = delete(node.left, target);
+                }
+                if (node.right != null) {
+                    node.right = delete(node.right, target);
+                }
+                if (node.left == null && node.right == null) {
+                    return null;
+                }
+            }
+        } else {
+            if (node.left != null) {
+                node.left = delete(node.left, target);
+            }
+            if (node.right != null) {
+                node.right = delete(node.right, target);
+            }
+        }
+        return node;
+    }
+
     // 2000. Reverse Prefix of Word
     public String reversePrefix(String word, char ch) {
         int index = word.indexOf(ch);
