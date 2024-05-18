@@ -130,6 +130,23 @@ public class May2024 {
         return people.length - 1 - j;
     }
 
+    // 979. Distribute Coins in Binary Tree
+    int ans;
+
+    public int distributeCoins(TreeNode root) {
+        ans = 0;
+        dfsCoin(root);
+        return ans;
+    }
+
+    private int dfsCoin(TreeNode node) {
+        if (node == null) return 0;
+        int leftDist = dfsCoin(node.left);
+        int rightDist = dfsCoin(node.right);
+        ans += Math.abs(leftDist) + Math.abs(rightDist);
+        return node.val - 1 + leftDist + rightDist;
+    }
+
     // 1219. Path with Maximum Gold
     public int getMaximumGold(int[][] grid) {
         int rows = grid.length, cols = grid[0].length;
