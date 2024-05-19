@@ -2,10 +2,7 @@ package org.example;
 
 import org.example.contest.biweekly_contest.Contest129;
 import org.example.contest.biweekly_contest.Contest130;
-import org.example.contest.weekly_contest.Contest394;
-import org.example.contest.weekly_contest.Contest395;
-import org.example.contest.weekly_contest.Contest396;
-import org.example.contest.weekly_contest.Contest397;
+import org.example.contest.weekly_contest.*;
 import org.example.daily_challenge.April2024;
 
 import java.util.ArrayList;
@@ -16,7 +13,7 @@ import java.util.List;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Contest397 problem = new Contest397();
+        Contest398 problem = new Contest398();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -27,18 +24,18 @@ public class Main {
         String order = "cba";
         String s = "abcd";
 
-        int[] freq = {5,2};
+        int[] freq = {5, 2};
         String s1 = "xaxcd";
         char c = 't';
-        int[] nums = {10, 9, 7};
+//        int[] nums = {10, 9, 7};
 //        int[][] arrays = {{1,0,0},{0,1,1},{0,1,1}};
-        int[][] arrays = {{1,1,0,0,0,1},{1,1,0,0,0,0}};
+        int[][] arrays = {{1, 1, 0, 0, 0, 1}, {1, 1, 0, 0, 0, 0}};
         s = "aaAbcBC";
         String t = "(*))";
-        int[][] edges = {{2,2},{-1,-2},{-4,4},{-3,1},{3,-3}};
+        int[][] edges = {{2, 2}, {-1, -2}, {-4, 4}, {-3, 1}, {3, -3}};
 
-        int[] nums1 = {4,6,3,1,4,2,10,9,5};
-        int[] nums2 = {5,10,3,2,6,1,9};
+        int[] nums1 = {4, 6, 3, 1, 4, 2, 10, 9, 5};
+        int[] nums2 = {5, 10, 3, 2, 6, 1, 9};
 
 //        int[] nums1 = {4,20,16,12,8};
 //        int[] nums2 = {14,18,10};
@@ -48,12 +45,15 @@ public class Main {
         grid.add(Arrays.asList(8, 9, 6, 1));
         grid.add(Arrays.asList(6, 7, 14, 3));
         grid.add(Arrays.asList(2, 5, 3, 1));
-        System.out.println(problem.maxScore(grid));
+
+        int[] nums = {13,23,12};
+        int[][] querries = {{0, 1}};
+        System.out.println(problem.sumDigitDifferences(nums));
 //        System.out.println(3 | 3);
 
         // System out Array
         System.out.print("Array elements: \n");
-//        int[][] res = problem.findFarmland(arrays);
+//        boolean[] res = problem.isArraySpecial(nums, querries);
 //        for (int i = 0; i < res.length; i++) {
 //            System.out.print(res[i] + " ");
 //        }
