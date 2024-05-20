@@ -213,6 +213,34 @@ public class May2024 {
         return node;
     }
 
+    // 1863. Sum of All Subset XOR Totals
+    /*
+        Use another array and bit 0, 1 to mark which element is in the subset;
+        int[] arr = {1, 2, 3, 4}
+        int[] subset = {0, 0, 0, 0}
+        The subset of arr can be:
+         - 0001 {4}
+         - 0010 {3}
+         - 0011 {3, 4}
+         - ....
+         - 1111 {1, 2, 3, 4} = 15
+        1 << n = 1 << 4 = 10000 = 16
+    */
+    public int subsetXORSum(int[] nums) {
+        int n = nums.length;
+        int res = 0;
+        for (int i = 1; i < (1 << n); i++) {
+            int curTotal = 0;
+            for (int j = 0; j < n; j++) {
+                if ((i & (1 << j)) != 0) {
+                    curTotal ^= nums[j];
+                }
+            }
+            res += curTotal;
+        }
+        return res;
+    }
+
     // 2000. Reverse Prefix of Word
     public String reversePrefix(String word, char ch) {
         int index = word.indexOf(ch);
