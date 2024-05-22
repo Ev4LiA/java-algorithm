@@ -24,6 +24,41 @@ public class May2024 {
         return res;
     }
 
+    // 131. Palindrome Partitioning
+    public List<List<String>> res;
+    public List<List<String>> partition(String s) {
+         res = new ArrayList<>();
+         backtrack(s, 0, new ArrayList<>());
+         return res;
+    }
+
+    private void backtrack(String s, int start, List<String> path) {
+        if (start == s.length()) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+
+        for (int end = start + 1; end <= s.length(); end++) {
+            if (isPalindrome(s.substring(start, end + 1))) {
+                path.add(s.substring(start, end));
+                backtrack(s, end, path);
+                path.remove(path.size() - 1);
+            }
+        }
+    }
+
+    private boolean isPalindrome(String s) {
+        int i = 0, j = s.length() - 1;
+        while(i < j) {
+            if (s.charAt(i) != s.charAt(j)) {
+                return false;
+            } else {
+                i++; j--;
+            }
+        }
+        return true;
+    }
+
     // 165. Compare Version Numbers
     public int compareVersion(String version1, String version2) {
         String[] v1 = version1.split("\\.");
