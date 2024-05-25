@@ -26,10 +26,11 @@ public class May2024 {
 
     // 131. Palindrome Partitioning
     public List<List<String>> res;
+
     public List<List<String>> partition(String s) {
-         res = new ArrayList<>();
-         backtrack(s, 0, new ArrayList<>());
-         return res;
+        res = new ArrayList<>();
+        backtrack(s, 0, new ArrayList<>());
+        return res;
     }
 
     private void backtrack(String s, int start, List<String> path) {
@@ -49,14 +50,20 @@ public class May2024 {
 
     private boolean isPalindrome(String s) {
         int i = 0, j = s.length() - 1;
-        while(i < j) {
+        while (i < j) {
             if (s.charAt(i) != s.charAt(j)) {
                 return false;
             } else {
-                i++; j--;
+                i++;
+                j--;
             }
         }
         return true;
+    }
+
+    // 140. Word Break II
+    public List<String> wordBreak(String s, List<String> wordDict) {
+
     }
 
     // 165. Compare Version Numbers
@@ -233,6 +240,11 @@ public class May2024 {
         return localMaxGold;
     }
 
+    // 1255. Maximum Score Words Formed by Letters
+    public int maxScoreWords(String[] words, char[] letters, int[] score) {
+
+    }
+
     // 1325. Delete Leaves With a Given Value
     public TreeNode removeLeafNodes(TreeNode root, int target) {
         root = delete(root, target);
@@ -387,6 +399,25 @@ public class May2024 {
             i++;
         }
         return fakeHead.next;
+    }
+
+    // 2597. The Number of Beautiful Subsets
+    public int result;
+
+    public int beautifulSubsets(int[] nums, int k) {
+        return 0;
+    }
+
+
+    private boolean isBeautiful(ArrayList<Integer> arr, int k) {
+        if (arr.isEmpty()) return false;
+        if (arr.size() == 1) return true;
+        for (int i = 0; i < arr.size() - 1; i++) {
+            if (arr.get(i + 1) - arr.get(i) == k) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // 2812. Find the Safest Path in a Grid

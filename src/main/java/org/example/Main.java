@@ -4,6 +4,7 @@ import org.example.contest.biweekly_contest.Contest129;
 import org.example.contest.biweekly_contest.Contest130;
 import org.example.contest.weekly_contest.*;
 import org.example.daily_challenge.April2024;
+import org.example.daily_challenge.May2024;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import java.util.List;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Contest398 problem = new Contest398();
+        May2024 problem = new May2024();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -46,9 +47,9 @@ public class Main {
         grid.add(Arrays.asList(6, 7, 14, 3));
         grid.add(Arrays.asList(2, 5, 3, 1));
 
-        int[] nums = {13,23,12};
+        int[] nums = {2, 4, 6};
         int[][] querries = {{0, 1}};
-        System.out.println(problem.sumDigitDifferences(nums));
+        System.out.println(problem.beautifulSubsets(nums, 2));
 //        System.out.println(3 | 3);
 
         // System out Array
