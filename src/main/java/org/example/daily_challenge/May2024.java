@@ -6,6 +6,8 @@ import org.example.utilities.TreeNode;
 import java.util.*;
 
 public class May2024 {
+    final int MOD = 1000000007;
+
     // 78. Subsets
     public List<List<Integer>> subsets(int[] nums) {
         int n = nums.length;
@@ -63,7 +65,31 @@ public class May2024 {
 
     // 140. Word Break II
     public List<String> wordBreak(String s, List<String> wordDict) {
+        HashSet<String> dict = new HashSet<>(wordDict);
+        HashMap<Integer, List<String>> map = new HashMap<>();
+        return wordBreakerRecursion(s, 0, dict, map);
+    }
 
+    private List<String> wordBreakerRecursion(String s, int startIndex, HashSet<String> dict, HashMap<Integer, List<String>> map) {
+        if (map.containsKey(startIndex)) {
+            return map.get(startIndex);
+        }
+        List<String> validSubStr = new ArrayList<>();
+        if (startIndex == s.length()) {
+            validSubStr.add("");
+        }
+
+        for (int end = startIndex + 1; end <= s.length(); end++) {
+            String prefix = s.substring(startIndex, end);
+            if (dict.contains(prefix)) {
+                List<String> suffixes = wordBreakerRecursion(s, end, dict, map);
+                for (String suffix : suffixes) {
+                    validSubStr.add(prefix + (suffix.isEmpty() ? "" : " ") + suffix);
+                }
+            }
+        }
+        map.put(startIndex, validSubStr);
+        return validSubStr;
     }
 
     // 165. Compare Version Numbers
@@ -87,6 +113,77 @@ public class May2024 {
     public void deleteNode(ListNode node) {
         node.val = node.next.val;
         node.next = node.next.next;
+    }
+
+    // 552. Student Attendance Record II
+    /* METHOD 1: RECURSION */
+    public int checkRecord(int n) {
+        int[][][] dp = new int[n][2][3];
+
+        for (int i = 0; i < n; i++) {
+            // No of Absent
+            for (int j = 0; j < 2; j++) {
+                // No of Late
+                for (int k = 0; k < 3; k++) {
+                    dp[i][j][k] = -1;
+                }
+            }
+        }
+        return checkRecordRecursion(0, 0, 0, n, dp);
+    }
+
+    private int checkRecordRecursion(int index, int absentCount, int lateCount, int n, int[][][] dp) {
+        if (index == n) {
+            return 1;
+        }
+
+        if (dp[index][absentCount][lateCount] != -1) {
+            return dp[index][absentCount][lateCount];
+        }
+
+        int nextAbsent = absentCount < 1 ? checkRecordRecursion(index + 1, absentCount + 1, 0, n, dp) : 0;
+        int nextLate = lateCount < 2 ? checkRecordRecursion(index + 1, absentCount, lateCount + 1, n, dp) : 0;
+        int nextPresent = checkRecordRecursion(index + 1, absentCount, 0, n, dp);
+        int totalWay = ((nextAbsent + nextLate) % MOD  + nextPresent) % MOD;
+        dp[index][absentCount][lateCount] = totalWay;
+        return totalWay;
+    }
+
+    /* METHOD 2: DP
+        We only care about state at index - 1 and current state, so instead we use a n * 2 * 3 arrays to cover all n state, we only need 2 * 2 * 3 arrays, or we can say we need 2 arrays 2 * 3, one for last state, and one for current state;
+     */
+    public int checkRecord2(int n) {
+        int[][] last = new int[2][3];
+        int[][] current = new int[2][3];
+        last[0][0] = 1;
+
+        for (int i = 0; i < n; i++) {
+            // No of Absent
+            for (int countAbsent = 0; countAbsent < 2; countAbsent++) {
+                // No of Late
+                for (int countLate = 0; countLate < 3; countLate++) {
+                    current[countAbsent][0] = (current[countAbsent][0] + last[countAbsent][countLate]) % MOD;
+
+                    if (countAbsent == 0) {
+                        current[countAbsent + 1][0] = (current[countAbsent + 1][0] + last[countAbsent][countLate]) % MOD;
+                    }
+
+                    if (countLate < 2) {
+                        current[countAbsent][countLate + 1] = (current[countAbsent][countLate + 1] + last[countAbsent][countLate]) % MOD;
+                    }
+                }
+            }
+            last = current;
+            current = new int[2][3];
+        }
+
+        int res = 0;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 3; j++) {
+                res = (res + last[i][j]) % MOD;
+            }
+        }
+        return res;
     }
 
     // 506. Relative Ranks
@@ -241,8 +338,41 @@ public class May2024 {
     }
 
     // 1255. Maximum Score Words Formed by Letters
+    public int maxScoreWordsRes;
     public int maxScoreWords(String[] words, char[] letters, int[] score) {
+        // count is used to count number of each char in letters;
+        // letterCount is used to count number of each char in a word in words array;
+        int[] count = new int[26];
+        int[] letterCount = new int[26];
+        maxScoreWordsRes = 0;
 
+        for (char c : letters) {
+            count[c - 'a']++;
+        }
+
+        maxScoreWordsBackTrack(words, score, count, letterCount, 0, 0);
+        return maxScoreWordsRes;
+    }
+
+    private void maxScoreWordsBackTrack(String[] words, int[] score, int[] count, int[] letterCount, int pos, int temp) {
+        for (int i = 0; i < 26; i++) {
+            if (letterCount[i] > count[i]) return;
+        }
+
+        maxScoreWordsRes = Math.max(maxScoreWordsRes, temp);
+
+        for (int i = pos; i < words.length; i++) {
+            for (char c : words[i].toCharArray()) {
+                letterCount[c - 'a']++;
+                temp += score[c - 'a'];
+            }
+            maxScoreWordsBackTrack(words, score, count, letterCount, i + 1, temp);
+
+            for (char c : words[i].toCharArray()) {
+                letterCount[c - 'a']--;
+                temp -= score[c - 'a'];
+            }
+        }
     }
 
     // 1325. Delete Leaves With a Given Value
