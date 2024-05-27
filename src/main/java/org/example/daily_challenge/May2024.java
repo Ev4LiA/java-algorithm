@@ -144,7 +144,7 @@ public class May2024 {
         int nextAbsent = absentCount < 1 ? checkRecordRecursion(index + 1, absentCount + 1, 0, n, dp) : 0;
         int nextLate = lateCount < 2 ? checkRecordRecursion(index + 1, absentCount, lateCount + 1, n, dp) : 0;
         int nextPresent = checkRecordRecursion(index + 1, absentCount, 0, n, dp);
-        int totalWay = ((nextAbsent + nextLate) % MOD  + nextPresent) % MOD;
+        int totalWay = ((nextAbsent + nextLate) % MOD + nextPresent) % MOD;
         dp[index][absentCount][lateCount] = totalWay;
         return totalWay;
     }
@@ -339,6 +339,7 @@ public class May2024 {
 
     // 1255. Maximum Score Words Formed by Letters
     public int maxScoreWordsRes;
+
     public int maxScoreWords(String[] words, char[] letters, int[] score) {
         // count is used to count number of each char in letters;
         // letterCount is used to count number of each char in a word in words array;
@@ -406,6 +407,20 @@ public class May2024 {
             }
         }
         return node;
+    }
+
+    // 1608. Special Array With X Elements Greater Than or Equal X
+    public int specialArray(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        if (nums[0] >= n) return n;
+
+        for (int i = 1; i < n; i++) {
+            if (nums[n - i] >= i && nums[n - i - 1] < i) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     // 1863. Sum of All Subset XOR Totals
@@ -532,10 +547,36 @@ public class May2024 {
     }
 
     // 2597. The Number of Beautiful Subsets
-    public int result;
+    /* METHOD 1: BACKTRACKING */
+    public int beautifulSubsetsRes;
+    private Map<Integer, Integer> beautifulSubsetsVisited;
 
     public int beautifulSubsets(int[] nums, int k) {
-        return 0;
+        int n = nums.length;
+        beautifulSubsetsRes = 0;
+        beautifulSubsetsVisited = new HashMap<>();
+
+        beautifulSubsetsBacktrack(nums, k, 0);
+        return beautifulSubsetsRes - 1;
+    }
+
+    private void beautifulSubsetsBacktrack(int[] nums, int k, int index) {
+        if (index == nums.length) {
+            beautifulSubsetsRes++;
+            return;
+        }
+
+        int num = nums[index];
+        if (!beautifulSubsetsVisited.containsKey(num - k) && !beautifulSubsetsVisited.containsKey(num + k)) {
+            beautifulSubsetsVisited.put(num, beautifulSubsetsVisited.getOrDefault(num, 0) + 1);
+            beautifulSubsetsBacktrack(nums, k, index + 1);
+            beautifulSubsetsVisited.put(num, beautifulSubsetsVisited.get(num) - 1);
+            if (beautifulSubsetsVisited.get(num) == 0) {
+                beautifulSubsetsVisited.remove(num);
+            }
+        }
+
+        beautifulSubsetsBacktrack(nums, k, index + 1);
     }
 
 
