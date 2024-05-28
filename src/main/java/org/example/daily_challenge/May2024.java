@@ -304,6 +304,25 @@ public class May2024 {
         return node.val - 1 + leftDist + rightDist;
     }
 
+    // 1208. Get Equal Substrings Within Budget
+    public int equalSubstring(String s, String t, int maxCost) {
+        int n = s.length(), max = 0, left = 0, right = 0, sum = 0;
+        int[] diff = new int[n];
+        for (int i = 0; i < n; i++) {
+            diff[i] = Math.abs(s.charAt(i) - t.charAt(i));
+        }
+
+        for (; right < n; right++) {
+            sum += diff[right];
+            if (sum > maxCost) {
+                sum -= diff[left];
+                left++;
+            }
+            max = Math.max(max, right - left + 1);
+        }
+        return max;
+    }
+
     // 1219. Path with Maximum Gold
     public int getMaximumGold(int[][] grid) {
         int rows = grid.length, cols = grid[0].length;
