@@ -428,6 +428,52 @@ public class May2024 {
         return node;
     }
 
+    // 1404. Number of Steps to Reduce a Number in Binary Representation to One
+    public int numSteps(String s) {
+        int n = s.length(), res = 0;
+        if (n == 1 && s.equals("1")) return 0;
+
+        while (!s.equals("1")) {
+            n = s.length();
+            if (s.charAt(n - 1) == '0') {
+                s = s.substring(0, n - 1);
+            } else {
+                int carry = 1;
+                char[] arr = s.toCharArray();
+                for (int i = arr.length - 1; i >= 0; i--) {
+                    if (carry == 0) break;
+                    if (arr[i] == '0') {
+                        arr[i] = '1';
+                        carry = 0;
+                    } else {
+                        arr[i] = '0';
+                    }
+                }
+                s = String.valueOf(arr);
+                if (carry == 1) {
+                    s = "1" + s;
+                }
+            }
+            res++;
+        }
+        return res;
+    }
+
+    // 1442. Count Triplets That Can Form Two Arrays of Equal XOR
+    public int countTriplets(int[] arr) {
+        int n = arr.length, res = 0;
+        for (int i = 0; i < n; i++) {
+            int val = arr[i];
+            for (int j = i + 1; j < n; j++) {
+                val = val ^ arr[j];
+                if (val == 0 && j - i + 1 >= 2) {
+                    res += j - i;
+                }
+            }
+        }
+        return res;
+    }
+
     // 1608. Special Array With X Elements Greater Than or Equal X
     public int specialArray(int[] nums) {
         Arrays.sort(nums);
