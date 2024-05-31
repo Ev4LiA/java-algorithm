@@ -45,7 +45,7 @@ public class Main {
 
         int[] nums = {2, 4, 6};
         int[][] querries = {{0, 1}};
-        System.out.println(problem.countTriplets(new int[]{1,1,1,1,1}));
+        System.out.println(problem.singleNumber(new int[]{1,2,1,3,2,5}));
 //        System.out.println(3 | 3);
 
         // System out Array

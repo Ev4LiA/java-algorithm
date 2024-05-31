@@ -115,6 +115,27 @@ public class May2024 {
         node.next = node.next.next;
     }
 
+    // 260. Single Number III
+    public int[] singleNumber(int[] nums) {
+        int res = nums[0], setBit = 0, nonSetBit = 0, bit = 0;
+        for (int i = 1; i < nums.length; i++) {
+            res = res ^ nums[i];
+        }
+
+        while ((res & (1 << bit)) == 0) {
+            bit++;
+        }
+
+        for (int num : nums) {
+            if ((num & (1 << bit)) == 0) {
+                setBit = setBit ^ num;
+            } else {
+                nonSetBit = nonSetBit ^ num;
+            }
+        }
+        return new int[]{setBit, nonSetBit};
+    }
+
     // 552. Student Attendance Record II
     /* METHOD 1: RECURSION */
     public int checkRecord(int n) {
