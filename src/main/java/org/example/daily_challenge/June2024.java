@@ -14,6 +14,17 @@ public class June2024 {
         return Math.max(includeI, excludeI);
     }
 
+    // 344. Reverse String
+    public void reverseString(char[] s) {
+        int l = 0, r = s.length - 1;
+        while (l < r) {
+            char temp = s[l];
+            s[l] = s[r];
+            s[r] = temp;
+            l++; r--;
+        }
+    }
+
     // 3110. Score of a String
     public int scoreOfString(String s) {
         int res = 0;
