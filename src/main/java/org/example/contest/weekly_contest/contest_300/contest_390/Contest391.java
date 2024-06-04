@@ -1,7 +1,4 @@
-package org.example.contest.weekly_contest;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.example.contest.weekly_contest.contest_300.contest_390;
 
 public class Contest391 {
     // 3099. Harshad Number

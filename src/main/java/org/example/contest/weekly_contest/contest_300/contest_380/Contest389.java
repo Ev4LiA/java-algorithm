@@ -1,7 +1,6 @@
-package org.example.contest.weekly_contest;
+package org.example.contest.weekly_contest.contest_300.contest_380;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Contest389 {

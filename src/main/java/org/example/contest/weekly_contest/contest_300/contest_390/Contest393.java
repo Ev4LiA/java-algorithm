@@ -1,4 +1,4 @@
-package org.example.contest.weekly_contest;
+package org.example.contest.weekly_contest.contest_300.contest_390;
 
 import java.util.ArrayList;
 import java.util.HashMap;

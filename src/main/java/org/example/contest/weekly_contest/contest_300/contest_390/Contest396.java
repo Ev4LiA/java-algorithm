@@ -1,7 +1,6 @@
-package org.example.contest.weekly_contest;
+package org.example.contest.weekly_contest.contest_300.contest_390;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class Contest396 {
     // 3136. Valid Word
