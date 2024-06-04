@@ -60,7 +60,7 @@ public class Contest386 {
             sum += num;
         }
 
-        int minI = 0, maxI = m - 1, out = 0;
+        int minI = 0, maxI = m - 1, out = -1;
 
 
         while(minI <= maxI) {
@@ -103,6 +103,74 @@ public class Contest386 {
 
     // 3049. Earliest Second to Mark Indices II
     public int earliestSecondToMarkIndicesII(int[] nums, int[] changeIndices) {
+        int n = nums.length, m = changeIndices.length;
+        long sum = 0;
 
+        for (int i = 0; i < m; i++) {
+            changeIndices[i]--;
+        }
+
+        for (int num : nums) {
+            sum += num;
+        }
+
+        int minI = 0, maxI = m - 1, out = -1;
+
+
+        while(minI <= maxI) {
+            int midI = minI + (maxI - minI) / 2;
+            if (checkPossibleII(nums, changeIndices, midI, sum)) {
+                out = midI + 1;
+                maxI = midI - 1;
+            } else {
+                minI = midI + 1;
+            }
+        }
+        return out;
+    }
+
+    private boolean checkPossibleII(int[] nums, int[] changeIndices, int outIndex, long sum)  {
+        sum = sum + nums.length;
+        // Save the first appearance second of an indices;
+        Map<Integer, Integer> earliestPos = new HashMap<>();
+        for (int i = 0; i <= outIndex; i++) {
+            if (!earliestPos.containsKey(changeIndices[i]) && nums[changeIndices[i]] > 1) {
+                earliestPos.put(changeIndices[i], i);
+            }
+        }
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for (Map.Entry<Integer, Integer> entry : earliestPos.entrySet()) {
+            map.put(entry.getValue(), entry.getKey());
+        }
+
+        // Prioritize the one with smaller value {val, earliest position}
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+        int availableToMark = 0;
+        for (int i = outIndex; i >= 0; i--) {
+            if (map.containsKey(i)) {
+                pq.add(new int[]{nums[map.get(i)], i});
+                if (availableToMark < 1 && !pq.isEmpty()) {
+                    // Dont have enough available mark to mark this number, so we remove it from the mapper
+                    int pos = pq.poll()[1];
+                    map.remove(pos);
+                    availableToMark++;
+                } else {
+                    availableToMark--;
+                }
+            } else {
+                availableToMark++;
+            }
+        }
+
+        for (int sec = 0; sec <= outIndex; sec++) {
+            if (map.containsKey(sec)) {
+                int index = map.get(sec);
+                sum -= nums[index];
+            } else {
+                sum -= 1;
+            }
+        }
+        return sum <= 0;
     }
 }

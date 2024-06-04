@@ -45,7 +45,7 @@ public class Main {
 
         int[] nums = {2, 4, 6};
         int[][] querries = {{0, 1}};
-        System.out.println(problem.earliestSecondToMarkIndices(new int[]{1,3}, new int[]{1,1,1,2,1,1,1}));
+        System.out.println(problem.earliestSecondToMarkIndices(new int[]{3,2,3}, new int[]{1,3,2,2,2,2,3}));
 //        System.out.println(3 | 3);
 
         // System out Array
