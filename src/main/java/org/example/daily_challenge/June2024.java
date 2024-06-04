@@ -27,6 +27,19 @@ public class June2024 {
         }
     }
 
+    // 409. Longest Palindrome
+    public int longestPalindrome(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        int result = 0;
+        for (char c : s.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+            if (map.get(c) % 2 == 0) {
+                result += 2;
+            }
+        }
+        return result == s.length() ? result : result + 1;
+    }
+
     // 2486. Append Characters to String to Make Subsequence
     public int appendCharacters(String s, String t) {
         int i = 0, j = 0;
