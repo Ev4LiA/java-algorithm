@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.contest.weekly_contest.Contest400;
+import org.example.contest.weekly_contest.Contest386;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +10,7 @@ import java.util.List;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Contest400 problem = new Contest400();
+        Contest386 problem = new Contest386();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -45,7 +45,7 @@ public class Main {
 
         int[] nums = {2, 4, 6};
         int[][] querries = {{0, 1}};
-        System.out.println(problem.minimumDifference(new int[]{1,2,4,2}, 3));
+        System.out.println(problem.earliestSecondToMarkIndices(new int[]{1,3}, new int[]{1,1,1,2,1,1,1}));
 //        System.out.println(3 | 3);
 
         // System out Array
