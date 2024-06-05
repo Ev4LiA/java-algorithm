@@ -51,6 +51,56 @@ public class Contest380 {
 
     // 3007. Maximum Number That Sum of the Prices Is Less Than or Equal to K
     public long findMaximumNumber(long k, int x) {
-        return 0L;
+        long low = 1, high = 1_000_000_000_000_000L;
+        while (low <= high) {
+            long mid = low + (high - low) / 2;
+            long res = calcPrice(mid, x);
+            if (res <= k) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return high;
+    }
+
+    private int countBits(long n) {
+        int count = 0;
+        while (n != 0) {
+            count++;
+            n = n << 1;
+        }
+        return count;
+    }
+
+    private long calcPrice(long n, int x) {
+        int i = countBits(n);
+        long price = 0L;
+        n++;
+        while (i != 0) {
+            if (i % x == 0) {
+                price += ((n / (long) Math.pow(2, i)) * ((long) Math.pow(2, i - 1)) + (long) Math.max(0L, (n % (long) Math.pow(2, i)) - (long) Math.pow(2, i - 1)));
+            }
+            i--;
+        }
+        return price;
+    }
+
+    // 3008. Find Beautiful Indices in the Given Array II
+    public List<Integer> beautifulIndices(String s, String a, String b, int k) {
+
+    }
+
+    private List<Integer> findStringKMP(String s, String pattern) {
+        List<Integer> indiceList = new ArrayList<>();
+
+        int[] longestPrefixString = new int[pattern.length()];
+        computeLps(pattern, longestPrefixString);
+    }
+
+    private void computeLps(String pattern, int[] lps) {
+        int m = pattern.length();
+        lps[0] = 0;
+
     }
 }

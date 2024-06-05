@@ -1,6 +1,8 @@
 package org.example.daily_challenge;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class June2024 {
     // 198. House Robber
@@ -38,6 +40,39 @@ public class June2024 {
             }
         }
         return result == s.length() ? result : result + 1;
+    }
+
+    // 1002. Find Common Characters
+    public List<String> commonChars(String[] words) {
+        List<String> result = new ArrayList<>();
+        int[] last = count(words[0]);
+        for (int i = 1; i < words.length; i++) {
+            last = intersect(last, count(words[i]));
+        }
+
+        for (int i = 0; i < 26; i++) {
+            while(last[i] > 0) {
+                char a = (char) (i + 'a');
+                result.add(String.valueOf(a));
+                last[i]--;
+            }
+        }
+        return result;
+    }
+
+    private int[] intersect(int[] a, int[] b) {
+        for (int i = 0; i < a.length; i++) {
+            a[i] = Math.min(a[i], b[i]);
+        }
+        return a;
+    }
+
+    private int[] count(String word) {
+        int[] arr = new int[26];
+        for (char c : word.toCharArray()) {
+            arr[c - 'a']++;
+        }
+        return arr;
     }
 
     // 2486. Append Characters to String to Make Subsequence
