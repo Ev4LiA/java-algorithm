@@ -87,8 +87,41 @@ public class Contest380 {
     }
 
     // 3008. Find Beautiful Indices in the Given Array II
-    public List<Integer> beautifulIndices(String s, String a, String b, int k) {
+    public List<Integer> beautifulIndicesII(String s, String a, String b, int k) {
+        List<Integer> res = new ArrayList<>();
 
+        List<Integer> aIndices = findStringKMP(s, a);
+        List<Integer> bIndices = findStringKMP(s, b);
+
+        for (int i : aIndices) {
+            int leftLimit = Math.max(i - k, 0);
+            int rightLimit = Math.min(i + k, s.length() - 1);
+
+            int lowerBoundIndex = lowerBound(bIndices, leftLimit);
+
+            if (lowerBoundIndex < bIndices.size() && bIndices.get(lowerBoundIndex) <= rightLimit) {
+                res.add(i);
+            }
+        }
+
+        return res;
+    }
+
+    private int lowerBound(List<Integer> list, int target) {
+        int left = 0, right = list.size() - 1, result = list.size();
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (list.get(mid) >= target) {
+                result = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        return result;
     }
 
     private List<Integer> findStringKMP(String s, String pattern) {
@@ -96,11 +129,48 @@ public class Contest380 {
 
         int[] longestPrefixString = new int[pattern.length()];
         computeLps(pattern, longestPrefixString);
+        int i = 0; // Index for text
+        int j = 0; // Index for pattern
+
+        while (i < s.length()) {
+            if (pattern.charAt(j) == pattern.charAt(i)) {
+                i++;
+                j++;
+            }
+
+            if (j == pattern.length()) {
+                indiceList.add(i - j); // Pattern found at index i-j+1 (If you have to return 1 Based indexing, that's why added + 1)
+                j = longestPrefixString[j - 1];
+            } else if (i < s.length() && pattern.charAt(j) != s.charAt(i)) {
+                if (j != 0) {
+                    j = longestPrefixString[j - 1];
+                } else {
+                    i++;
+                }
+            }
+        }
+
+        return indiceList;
     }
 
     private void computeLps(String pattern, int[] lps) {
-        int m = pattern.length();
+        int m = pattern.length(), len = 0;
         lps[0] = 0;
 
+        int i = 1;
+        while (i < m) {
+            if (pattern.charAt(i) == pattern.charAt(len)) {
+                len++;
+                lps[i] = len;
+                i++;
+            } else {
+                if (len != 0) {
+                    len = lps[len - 1];
+                } else {
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
     }
 }
