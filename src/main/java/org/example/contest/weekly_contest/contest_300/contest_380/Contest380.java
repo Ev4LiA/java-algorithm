@@ -133,7 +133,7 @@ public class Contest380 {
         int j = 0; // Index for pattern
 
         while (i < s.length()) {
-            if (pattern.charAt(j) == pattern.charAt(i)) {
+            if (pattern.charAt(j) == s.charAt(i)) {
                 i++;
                 j++;
             }
