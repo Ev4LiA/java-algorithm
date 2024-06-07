@@ -1,5 +1,7 @@
 package org.example.daily_challenge;
 
+import org.example.utilities.TrieNode;
+
 import java.util.*;
 
 public class June2024 {
@@ -39,6 +41,52 @@ public class June2024 {
             }
         }
         return result == s.length() ? result : result + 1;
+    }
+
+    // 648. Replace Words
+    public TrieNode root;
+    public String replaceWords(List<String> dictionary, String sentence) {
+        root = new TrieNode();
+        for (String word : dictionary) {
+            insertTrie(word);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        String[] arr = sentence.split(" ");
+        for (String str : arr) {
+            String res = searchWord(str);
+            sb.append(res).append(" ");
+        }
+        return sb.toString().trim();
+    }
+
+    private void insertTrie(String word) {
+        TrieNode node = root;
+        for (char c : word.toCharArray()) {
+            int i = c - 'a';
+            if (node.child[i] == null) {
+                node.child[i] = new TrieNode();
+            }
+            node = node.child[i];
+        }
+        node.isEnd = true;
+    }
+
+    private String searchWord(String word) {
+        TrieNode node = root;
+        int j = 0;
+        for (char c : word.toCharArray()) {
+            int i = c - 'a';
+            j++;
+            if (node.child[i] == null) {
+                return word;
+            } else if (node.child[i].isEnd) {
+                return word.substring(0, j);
+            } else {
+                node = node.child[i];
+            }
+        }
+        return word;
     }
 
     // 846. Hand of Straights
