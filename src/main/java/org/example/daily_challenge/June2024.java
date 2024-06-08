@@ -18,6 +18,22 @@ public class June2024 {
         return Math.max(includeI, excludeI);
     }
 
+    // 325.Maximum Size Subarray Sum Equals k
+    // Given an array nums and a target value k, find the maximum length of a subarray that sums to k. If there isn't one, return 0 instead.
+    public int lenOfLongSubarr(int nums[], int k) {
+        int n = nums.length, sum = 0, res = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+            if (map.containsKey(sum - k)) {
+                res = i - Math.max(res, map.get(sum - k));
+            } else {
+                map.put(sum, i);
+            }
+        }
+        return res;
+    }
+
     // 344. Reverse String
     public void reverseString(char[] s) {
         int l = 0, r = s.length - 1;
@@ -43,8 +59,47 @@ public class June2024 {
         return result == s.length() ? result : result + 1;
     }
 
+    // 523. Continuous Subarray Sum
+    public boolean checkSubarraySum(int[] nums, int k) {
+        int n = nums.length;
+        if (n == 1) return false;
+        long sum = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+            int remainder = (int) sum % k;
+
+            if (map.containsKey(remainder)) {
+                int left = map.get(remainder);
+                if (i - left > 1) {
+                    return true;
+                }
+            } else {
+                map.put(remainder, i);
+            }
+        }
+        return false;
+    }
+
+    // 560. Subarray Sum Equals K
+    public int subarraySum(int[] nums, int k) {
+        int sum = 0, res = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        for (int num : nums) {
+            sum += num;
+            if (map.containsKey(sum - k)) {
+                res += map.get(sum - k);
+            }
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return res;
+    }
+
     // 648. Replace Words
     public TrieNode root;
+
     public String replaceWords(List<String> dictionary, String sentence) {
         root = new TrieNode();
         for (String word : dictionary) {
@@ -111,7 +166,22 @@ public class June2024 {
             }
         }
         return true;
+    }
 
+    // 974. Subarray Sums Divisible by K
+    public int subarraysDivByK(int[] nums, int k) {
+        int res = 0, sum = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        for (int num : nums) {
+            sum = (sum + num) % k;
+            if (sum < 0) sum += k;
+            if (map.containsKey(sum)) {
+                res += map.get(sum);
+            }
+            map.put(sum % k, map.getOrDefault(sum, 0) + 1);
+        }
+        return res;
     }
 
     // 1002. Find Common Characters
