@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.contest.biweekly_contest.Contest132;
+import org.example.contest.weekly_contest.Contest401;
 import org.example.daily_challenge.June2024;
 
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.List;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        June2024 problem = new June2024();
+        Contest401 problem = new Contest401();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -45,7 +47,7 @@ public class Main {
 
         int[] nums = {2, 4, 6};
         int[][] querries = {{0, 1}};
-        System.out.println(problem.checkSubarraySum(new int[]{0,1,0,3,0,4,0,4,0}, 5));
+        System.out.println(problem.maxTotalReward(new int[]{1, 6, 4, 3, 2}));
 //        System.out.println(3 | 3);
 
         // System out Array

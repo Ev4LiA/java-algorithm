@@ -170,16 +170,18 @@ public class June2024 {
 
     // 974. Subarray Sums Divisible by K
     public int subarraysDivByK(int[] nums, int k) {
-        int res = 0, sum = 0;
+        int remainder = 0;
         HashMap<Integer, Integer> map = new HashMap<>();
         map.put(0, 1);
+        int res = 0;
         for (int num : nums) {
-            sum = (sum + num) % k;
-            if (sum < 0) sum += k;
-            if (map.containsKey(sum)) {
-                res += map.get(sum);
+            remainder = (remainder + num) % k;
+            if (remainder < 0) remainder = remainder + k;
+
+            if (map.containsKey(remainder)) {
+                res += map.get(remainder);
             }
-            map.put(sum % k, map.getOrDefault(sum, 0) + 1);
+            map.put(remainder, map.getOrDefault(remainder, 0) + 1);
         }
         return res;
     }
