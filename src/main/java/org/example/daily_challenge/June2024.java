@@ -219,6 +219,19 @@ public class June2024 {
         return arr;
     }
 
+    // 1051. Height Checker
+    public int heightChecker(int[] heights) {
+        int[] expected = heights.clone();
+        Arrays.sort(expected);
+        int res = 0;
+        for (int i = 0; i < heights.length; i++) {
+            if (heights[i] != expected[i]) {
+                res++;
+            }
+        }
+        return res;
+    }
+
     // 2486. Append Characters to String to Make Subsequence
     public int appendCharacters(String s, String t) {
         int i = 0, j = 0;
