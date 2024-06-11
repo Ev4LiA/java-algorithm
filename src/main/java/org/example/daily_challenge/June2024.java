@@ -232,6 +232,44 @@ public class June2024 {
         return res;
     }
 
+    // 1122. Relative Sort Array
+    public int[] relativeSortArray(int[] arr1, int[] arr2) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int j : arr1) {
+            map.put(j, map.getOrDefault(j, 0) + 1);
+        }
+
+        int[] res = new int[arr1.length];
+        int i = 0;
+        for (int num : arr2) {
+            if (map.containsKey(num)) {
+                while (map.get(num) > 0) {
+                    res[i] = num;
+                    map.put(num, map.get(num) - 1);
+                    i++;
+                }
+                map.remove(num);
+            }
+        }
+
+        int[] remaining = new int[arr1.length - i];
+        int index = 0;
+        for (int num : arr1) {
+            if (map.containsKey(num)) {
+                remaining[index] = num;
+                index++;
+            }
+        }
+
+        Arrays.sort(remaining);
+        index = 0;
+        while (i < arr1.length) {
+            res[i] = remaining[index];
+            i++; index++;
+        }
+        return res;
+    }
+
     // 2486. Append Characters to String to Make Subsequence
     public int appendCharacters(String s, String t) {
         int i = 0, j = 0;
