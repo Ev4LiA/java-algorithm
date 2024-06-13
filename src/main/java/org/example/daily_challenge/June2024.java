@@ -297,6 +297,17 @@ public class June2024 {
         return res;
     }
 
+    // 2037. Minimum Number of Moves to Seat Everyone
+    public int minMovesToSeat(int[] seats, int[] students) {
+        Arrays.sort(seats);
+        Arrays.sort(students);
+        int res = 0;
+        for (int i = 0; i < seats.length; i++) {
+            res += Math.abs(seats[i] - students[i]);
+        }
+        return res;
+    }
+
     // 2486. Append Characters to String to Make Subsequence
     public int appendCharacters(String s, String t) {
         int i = 0, j = 0;
