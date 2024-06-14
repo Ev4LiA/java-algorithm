@@ -195,6 +195,44 @@ public class June2024 {
         return true;
     }
 
+    // 945. Minimum Increment to Make Array Unique
+    /* METHOD 1: SORTING (O(nLogn) */
+    public int minIncrementForUnique(int[] nums) {
+        int res = 0, n = nums.length;
+        Arrays.sort(nums);
+        for (int i = 1; i < n; i++) {
+            if (nums[i] <= nums[i - 1]) {
+                res += nums[i - 1] - nums[i] + 1;
+                nums[i] = nums[i - 1] + 1;
+            }
+        }
+        return res;
+    }
+
+    /* METHOD 2: O(n) */
+    public int minIncrementForUnique2(int[] nums) {
+        int res = 0, n = nums.length, max = 0;
+        for (int num : nums) {
+            max = Math.max(num, max);
+        }
+
+        int[] freq = new int[n + max + 1];
+
+        for (int num : nums) {
+            freq[num]++;
+        }
+
+
+        for (int i = 0; i < freq.length; i++) {
+            if (freq[i] > 1) {
+                int dup = freq[i] - 1;
+                res += dup;
+                freq[i + 1] += dup;
+            }
+        }
+        return res;
+    }
+
     // 974. Subarray Sums Divisible by K
     public int subarraysDivByK(int[] nums, int k) {
         int remainder = 0;
@@ -292,9 +330,22 @@ public class June2024 {
         index = 0;
         while (i < arr1.length) {
             res[i] = remaining[index];
-            i++; index++;
+            i++;
+            index++;
         }
         return res;
+    }
+
+    // 1827. Minimum Operations to Make the Array Increasing
+    public int minOperations(int[] nums) {
+            int res = 0;
+            for (int i = 1; i < nums.length; i++) {
+                if (nums[i] <= nums[i - 1]) {
+                    res += nums[i - 1] - nums[i] + 1;
+                    nums[i] = nums[i - 1] + 1;
+                }
+            }
+            return res;
     }
 
     // 2037. Minimum Number of Moves to Seat Everyone
