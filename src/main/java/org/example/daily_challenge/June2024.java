@@ -86,6 +86,32 @@ public class June2024 {
         return result == s.length() ? result : result + 1;
     }
 
+    // 502. IPO
+    public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
+        int n = profits.length;
+        int[][] projects = new int[n][2];
+        for (int i = 0; i < n; i++) {
+            projects[i] = new int[]{profits[i], capital[i]};
+        }
+
+        Arrays.sort(projects, (a, b) -> a[1] - b[1]);
+
+        int j = 0;
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+        for (int i = 0; i < k; i++) {
+            while (j < n && projects[j][1] <= w) {
+                pq.add(projects[j][0]);
+                j++;
+            }
+            if (pq.isEmpty()) {
+                break;
+            }
+
+            w += pq.poll();
+        }
+        return w;
+    }
+
     // 523. Continuous Subarray Sum
     public boolean checkSubarraySum(int[] nums, int k) {
         int n = nums.length;
@@ -338,14 +364,14 @@ public class June2024 {
 
     // 1827. Minimum Operations to Make the Array Increasing
     public int minOperations(int[] nums) {
-            int res = 0;
-            for (int i = 1; i < nums.length; i++) {
-                if (nums[i] <= nums[i - 1]) {
-                    res += nums[i - 1] - nums[i] + 1;
-                    nums[i] = nums[i - 1] + 1;
-                }
+        int res = 0;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] <= nums[i - 1]) {
+                res += nums[i - 1] - nums[i] + 1;
+                nums[i] = nums[i - 1] + 1;
             }
-            return res;
+        }
+        return res;
     }
 
     // 2037. Minimum Number of Moves to Seat Everyone
