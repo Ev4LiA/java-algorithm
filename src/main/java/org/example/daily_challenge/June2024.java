@@ -150,6 +150,17 @@ public class June2024 {
         return res;
     }
 
+    // 633. Sum of Square Numbers
+    public boolean judgeSquareSum(int c) {
+        for (long a = 0; a * a <= c; a++) {
+            double b = Math.sqrt(c - a * a);
+            if (b == (int) b) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // 648. Replace Words
     public TrieNode root;
 
