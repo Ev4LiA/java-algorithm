@@ -208,6 +208,27 @@ public class June2024 {
         return word;
     }
 
+    // 826. Most Profit Assigning Work
+    public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
+        int n = profit.length, res = 0;
+        int[][] works = new int[n][2];
+        for (int i = 0; i < n; i++) {
+            works[i] = new int[]{profit[i], difficulty[i]};
+        }
+        Arrays.sort(works, (a, b) -> a[1] - b[1]);
+        Arrays.sort(worker);
+
+        int j = 0, max = 0;
+        for (int k : worker) {
+            while (j < n && works[j][1] <= k) {
+                max = Math.max(max, works[j][0]);
+                j++;
+            }
+            res += max;
+        }
+        return res;
+    }
+
     // 846. Hand of Straights
     public boolean isNStraightHand(int[] hand, int groupSize) {
         int n = hand.length;
