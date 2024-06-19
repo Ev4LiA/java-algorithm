@@ -394,6 +394,34 @@ public class June2024 {
         return res;
     }
 
+    // 1482. Minimum Number of Days to Make m Bouquets
+    public int minDays(int[] bloomDay, int m, int k) {
+        int n = bloomDay.length, left = 1, right = (int)1e9;
+        if ((long) m * k > n) return -1;
+
+        while (left <= right) {
+            int mid = (left + right) / 2, flow = 0, bouq = 0;
+            for (int flower : bloomDay) {
+                if (flower > mid) {
+                    flow = 0;
+                } else {
+                    if (flow >= k) {
+                        bouq++;
+                        flow = 0;
+                    } else {
+                        flow++;
+                    }
+                }
+            }
+            if (bouq < m) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+
     // 1827. Minimum Operations to Make the Array Increasing
     public int minOperations(int[] nums) {
         int res = 0;
