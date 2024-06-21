@@ -355,6 +355,24 @@ public class June2024 {
         return res;
     }
 
+    // 1052. Grumpy Bookstore Owner
+    public int maxSatisfied(int[] customers, int[] grumpy, int minutes) {
+        int curSum = 0, max = 0, index = 0;
+        for (int i = 0; i < customers.length; i++) {
+            curSum += customers[i] * grumpy[i];
+            max = Math.max(curSum, max);
+            if (i >= minutes - 1) {
+                curSum -= customers[index] * grumpy[index];
+                index++;
+            }
+        }
+
+        for (int i = 0; i < customers.length; i++) {
+            max += customers[i] * (1 - grumpy[i]);
+        }
+        return max;
+    }
+
     // 1122. Relative Sort Array
     public int[] relativeSortArray(int[] arr1, int[] arr2) {
         HashMap<Integer, Integer> map = new HashMap<>();
