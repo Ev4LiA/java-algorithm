@@ -45,7 +45,7 @@ public class Main {
 
         int[] nums = {2, 4, 6};
         int[][] querries = {{0, 1}};
-        System.out.println(problem.maxProfitAssignment(new int[]{2, 4, 6, 8, 10}, new int[]{10, 20, 30, 40, 50}, new int[]{4, 5, 6, 7}));
+        System.out.println(problem.longestSubarray(new int[]{8,2,4,7}, 4));
 //        System.out.println(3 | 3);
 
         // System out Array

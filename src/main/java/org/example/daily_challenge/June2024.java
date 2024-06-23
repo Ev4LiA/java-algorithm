@@ -45,6 +45,35 @@ public class June2024 {
         return Math.max(includeI, excludeI);
     }
 
+    // 239. Sliding Window Maximum
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length, left = 0, right = 0, max = nums[right];
+        int[] res = new int[n - k + 1];
+        Deque<Integer> maxQueue = new ArrayDeque<>();
+        for (; right < k; right++) {
+            max = Math.max(max, nums[right]);
+        }
+        res[left] = max;
+
+        for (right = 0; right < n; right++) {
+            while (!maxQueue.isEmpty() && maxQueue.peekLast() < nums[right]) {
+                maxQueue.pollLast();
+            }
+
+            maxQueue.add(nums[right]);
+            if (right > k - 1) {
+                if (right - left + 1 > k) {
+                    if (maxQueue.peekFirst() == nums[left]) {
+                        maxQueue.pollFirst();
+                    }
+                    left++;
+                }
+                res[left] = maxQueue.peekFirst();
+            }
+        }
+        return res;
+    }
+
     // 325.Maximum Size Subarray Sum Equals k
     // Given an array nums and a target value k, find the maximum length of a subarray that sums to k. If there isn't one, return 0 instead.
     public int lenOfLongSubarr(int nums[], int k) {
@@ -59,6 +88,22 @@ public class June2024 {
             }
         }
         return res;
+    }
+
+    // 330. Patching Array
+    public int minPatches(int[] nums, int n) {
+        long miss = 1;
+        int added = 0, i = 0;
+        while (miss <= n) {
+            if (i < nums.length && nums[i] <= miss) {
+                miss += nums[i];
+                i++;
+            } else {
+                miss += miss;
+                added++;
+            }
+        }
+        return added;
     }
 
     // 344. Reverse String
@@ -412,9 +457,60 @@ public class June2024 {
         return res;
     }
 
+    // 1248. Count Number of Nice Subarrays
+    public int numberOfSubarrays(int[] nums, int k) {
+        int n = nums.length, res = 0, sum = 0;
+        for (int i = 0; i < n; i++) {
+            nums[i] = nums[i] % 2;
+        }
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+
+        for (int num : nums) {
+            sum += num;
+            if (map.containsKey(sum - k)) {
+                res += map.get(sum - k);
+            }
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return res;
+    }
+
+    // 1438. Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
+    public int longestSubarray(int[] nums, int limit) {
+        int res = 0, left = 0;
+        Deque<Integer> maxQueue = new ArrayDeque<>();
+        Deque<Integer> minQueue = new ArrayDeque<>();
+        for (int right = 0; right < nums.length; right++) {
+            while (!maxQueue.isEmpty() && maxQueue.peekLast() < nums[right]) {
+                maxQueue.pollLast();
+            }
+
+            while (!minQueue.isEmpty() && minQueue.peekLast() > nums[right]) {
+                minQueue.pollLast();
+            }
+            maxQueue.add(nums[right]);
+            minQueue.add(nums[right]);
+
+            if (maxQueue.peekFirst() - minQueue.peekFirst() > limit) {
+                if (maxQueue.peekFirst() == nums[left]) {
+                    maxQueue.pollFirst();
+                }
+
+                if (minQueue.peekFirst() == nums[left]) {
+                    minQueue.pollFirst();
+                }
+                left++;
+            }
+            res = Math.max(res, right - left + 1);
+        }
+        return res;
+    }
+
     // 1482. Minimum Number of Days to Make m Bouquets
     public int minDays(int[] bloomDay, int m, int k) {
-        int n = bloomDay.length, left = 1, right = (int)1e9;
+        int n = bloomDay.length, left = 1, right = (int) 1e9;
         if ((long) m * k > n) return -1;
 
         while (left <= right) {
@@ -438,6 +534,11 @@ public class June2024 {
             }
         }
         return left;
+    }
+
+    // 1552. Magnetic Force Between Two Balls
+    public int maxDistance(int[] position, int m) {
+        return 0;
     }
 
     // 1827. Minimum Operations to Make the Array Increasing
