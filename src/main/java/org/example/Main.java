@@ -1,7 +1,5 @@
 package org.example;
 
-import org.example.daily_challenge.June2024;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +8,7 @@ import java.util.List;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        June2024 problem = new June2024();
+        LeetCode75 problem = new LeetCode75();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -45,7 +43,7 @@ public class Main {
 
         int[] nums = {2, 4, 6};
         int[][] querries = {{0, 1}};
-        System.out.println(problem.longestSubarray(new int[]{8,2,4,7}, 4));
+        System.out.println(problem.compress(new char[]{'a', 'a', 'b', 'b', 'c', 'c', 'c'}));
 //        System.out.println(3 | 3);
 
         // System out Array
