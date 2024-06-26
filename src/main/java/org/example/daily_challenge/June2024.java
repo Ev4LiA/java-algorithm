@@ -1,10 +1,35 @@
 package org.example.daily_challenge;
 
+import org.example.utilities.TreeNode;
 import org.example.utilities.TrieNode;
 
 import java.util.*;
 
 public class June2024 {
+    // 1. Two Sum
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                return new int[]{map.get(target - nums[i]), i};
+            }
+            map.put(nums[i], i);
+        }
+        return new int[0];
+    }
+
+    // 70. Climbing Stairs
+    public int climbStairs(int n) {
+        int[] dp = new int[2];
+        Arrays.fill(dp, 1);
+        for (int i = 2; i <= n; i++) {
+            int step = dp[0] + dp[1];
+            dp[0] = dp[1];
+            dp[1] = step;
+        }
+        return dp[1];
+    }
+
     // 75. Sort Colors
     public void sortColors(int[] nums) {
         int red = 0, white = 0, blue = 0;
@@ -72,6 +97,22 @@ public class June2024 {
             }
         }
         return res;
+    }
+
+    // 322. Coin Change
+    public int coinChange(int[] coins, int amount) {
+        Arrays.sort(coins);
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; i++) {
+            for (int coin : coins) {
+                if (i - coin >= 0 && dp[i - coin] != Integer.MAX_VALUE) {
+                    dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
+                }
+            }
+        }
+        return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
     }
 
     // 325.Maximum Size Subarray Sum Equals k
@@ -299,7 +340,7 @@ public class June2024 {
     }
 
     // 945. Minimum Increment to Make Array Unique
-    /* METHOD 1: SORTING (O(nLogn) */
+    /* METHOD 1: SORTING (O(nLog(n))) */
     public int minIncrementForUnique(int[] nums) {
         int res = 0, n = nums.length;
         Arrays.sort(nums);
@@ -354,6 +395,11 @@ public class June2024 {
         return res;
     }
 
+    // 995. Minimum Number of K Consecutive Bit Flips
+    public int minKBitFlips(int[] nums, int k) {
+        return 0;
+    }
+
     // 1002. Find Common Characters
     public List<String> commonChars(String[] words) {
         List<String> result = new ArrayList<>();
@@ -385,6 +431,23 @@ public class June2024 {
             arr[c - 'a']++;
         }
         return arr;
+    }
+
+    // 1038. Binary Search Tree to Greater Sum Tree
+    public int nodeSum;
+
+    public TreeNode bstToGst(TreeNode root) {
+        nodeSum = 0;
+        inOrderTraversal(root);
+        return root;
+    }
+
+    private void inOrderTraversal(TreeNode root) {
+        if (root == null) return;
+        inOrderTraversal(root.right);
+        nodeSum += root.val;
+        root.val = nodeSum;
+        inOrderTraversal(root.left);
     }
 
     // 1051. Height Checker
@@ -475,6 +538,96 @@ public class June2024 {
             map.put(sum, map.getOrDefault(sum, 0) + 1);
         }
         return res;
+    }
+
+    // 1382. Balance a Binary Search Tree
+    /* METHOD 1: REBUILD NEW TREE */
+    public List<Integer> arr;
+
+    public TreeNode balanceBST(TreeNode root) {
+        arr = new ArrayList<>();
+        inOrderTraversal1382(root);
+        return sortedArrToTree(0, arr.size());
+    }
+
+    private void inOrderTraversal1382(TreeNode root) {
+        if (root == null) return;
+        inOrderTraversal1382(root.left);
+        arr.add(root.val);
+        inOrderTraversal1382(root.right);
+    }
+
+    private TreeNode sortedArrToTree(int start, int end) {
+        if (start > end) return null;
+        int mid = (start + end) / 2;
+        TreeNode tree = new TreeNode(arr.get(mid));
+        tree.left = sortedArrToTree(start, mid - 1);
+        tree.right = sortedArrToTree(mid + 1, end);
+        return tree;
+    }
+
+
+    /* METHOD 2: IN PLACE BUILD */
+    public TreeNode balanceBSTII(TreeNode root) {
+        if (root == null) return null;
+
+        // Step 1: Create the backbone (vine)
+        // Temporary dummy node
+        TreeNode vineHead = new TreeNode(0);
+        vineHead.right = root;
+        TreeNode current = vineHead;
+        while (current.right != null) {
+            if (current.right.left != null) {
+                rightRotate(current, current.right);
+            } else {
+                current = current.right;
+            }
+        }
+
+        // Step 2: Count the nodes
+        int nodeCount = 0;
+        current = vineHead.right;
+        while (current != null) {
+            ++nodeCount;
+            current = current.right;
+        }
+
+        // Step 3: Create a balanced BST
+        int m = (int) Math.pow(2, Math.floor(Math.log(nodeCount + 1) / Math.log(2))) - 1;
+        makeRotations(vineHead, nodeCount - m);
+        while (m > 1) {
+            m /= 2;
+            makeRotations(vineHead, m);
+        }
+
+        TreeNode balancedRoot = vineHead.right;
+        return balancedRoot;
+    }
+
+    // Function to perform a right rotation
+    private void rightRotate(TreeNode parent, TreeNode node) {
+        TreeNode tmp = node.left;
+        node.left = tmp.right;
+        tmp.right = node;
+        parent.right = tmp;
+    }
+
+    // Function to perform a left rotation
+    private void leftRotate(TreeNode parent, TreeNode node) {
+        TreeNode tmp = node.right;
+        node.right = tmp.left;
+        tmp.left = node;
+        parent.right = tmp;
+    }
+
+    // Function to perform a series of left rotations to balance the vine
+    private void makeRotations(TreeNode vineHead, int count) {
+        TreeNode current = vineHead;
+        for (int i = 0; i < count; ++i) {
+            TreeNode tmp = current.right;
+            leftRotate(current, tmp);
+            current = current.right;
+        }
     }
 
     // 1438. Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
