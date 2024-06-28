@@ -717,6 +717,22 @@ public class June2024 {
         return res;
     }
 
+    // 2285. Maximum Total Importance of Roads
+    public long maximumImportance(int n, int[][] roads) {
+        long[] degree = new long[n];
+        long res = 0;
+        for (int[] road : roads) {
+            degree[road[0]]++;
+            degree[road[1]]++;
+        }
+
+        Arrays.sort(degree);
+        for (int i = n; i > 0; i--) {
+            res += i * degree[i - 1];
+        }
+        return res;
+    }
+
     // 2486. Append Characters to String to Make Subsequence
     public int appendCharacters(String s, String t) {
         int i = 0, j = 0;
