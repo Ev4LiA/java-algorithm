@@ -1,6 +1,9 @@
 package org.example.daily_challenge;
 
+import org.example.utilities.ListNode;
+
 import java.util.Arrays;
+import java.util.List;
 
 public class July2024 {
     // 1509. Minimum Difference Between Largest and Smallest Value in Three Moves
@@ -27,5 +30,22 @@ public class July2024 {
             if (count == 3) return true;
         }
         return false;
+    }
+
+    // 2181. Merge Nodes in Between Zeros
+    public ListNode mergeNodes(ListNode head) {
+        ListNode dummy = head.next;
+        while (dummy != null) {
+            int sum = 0;
+            ListNode temp = dummy;
+            while (temp.val != 0) {
+                sum += temp.val;
+                temp = temp.next;
+            }
+            dummy.val = sum;
+            dummy.next = temp.next;
+            dummy = dummy.next;
+        }
+        return head.next;
     }
 }
