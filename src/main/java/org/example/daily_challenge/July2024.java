@@ -19,6 +19,18 @@ public class July2024 {
         return max;
     }
 
+    // 1518. Water Bottles
+    public int numWaterBottles(int numBottles, int numExchange) {
+        int res = 0;
+        while (numBottles >= numExchange) {
+            numBottles -= numExchange;
+            numBottles += 1;
+            res += numExchange;
+        }
+        res += numBottles;
+        return res;
+    }
+
     // 1550. Three Consecutive Odds
     public boolean threeConsecutiveOdds(int[] arr) {
         int count = 0;
@@ -60,7 +72,7 @@ public class July2024 {
         } else {
             res[0] = min;
         }
-        if (critPoints.size() > 1){
+        if (critPoints.size() > 1) {
             max = critPoints.get(critPoints.size() - 1) - critPoints.get(0);
         }
         res[1] = max;
@@ -86,6 +98,11 @@ public class July2024 {
 
     // 2582. Pass the Pillow
     public int passThePillow(int n, int time) {
-
+        int round = time / (n - 1);
+        if (round % 2 == 0) {
+            return time % (n - 1) + 1;
+        } else {
+            return n - time % n;
+        }
     }
 }
