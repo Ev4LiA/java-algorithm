@@ -1,7 +1,9 @@
 package org.example.dynamic_programing;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class DynamicPrograming {
@@ -139,6 +141,49 @@ public class DynamicPrograming {
         return dp[n][m];
     }
 
+    // 97. Interleaving String
+    /* METHOD 1: 2D DP */
+    public boolean isInterleave(String s1, String s2, String s3) {
+        int n1 = s1.length(), n2 = s2.length();
+        if (s3.length() != n1 + n2) return false;
+        boolean[][] dp = new boolean[n1 + 1][n2 + 1];
+        dp[0][0] = true;
+        for (int i = 0; i <= n1; i++) {
+            dp[i][0] = s1.substring(0, i).equals(s3.substring(0, i));
+        }
+
+        for (int i = 0; i <= n2; i++) {
+            dp[0][i] = s2.substring(0, i).equals(s3.substring(0, i));
+        }
+
+        for (int i = 1; i <= n1; i++) {
+            for (int j = 1; j <= n2; j++) {
+                dp[i][j] = (dp[i - 1][j] && s1.charAt(i - 1) == s3.charAt(i + j - 1)) || (dp[i][j - 1] && s2.charAt(j - 1) == s3.charAt(i + j - 1));
+            }
+        }
+        return dp[n1][n2];
+    }
+
+    /* METHOD 2: 1D DP */
+    public boolean isInterleaveII(String s1, String s2, String s3) {
+        int n1 = s1.length(), n2 = s2.length();
+        if (s3.length() != n1 + n2) return false;
+        boolean[] dp = new boolean[n2 + 1];
+        dp[0] = true;
+
+        for (int i = 1; i <= n2; i++) {
+            dp[i] = dp[i - 1] && s2.charAt(i - 1) == s3.charAt(i - 1);
+        }
+
+        for (int i = 1; i <= n1; i++) {
+            dp[0] = dp[0] && s1.charAt(i - 1) == s3.charAt(i - 1);
+            for (int j = 1; j <= n2; j++) {
+                dp[j] = (dp[j] && s1.charAt(i - 1) == s3.charAt(i + j - 1)) || (dp[j - 1] && s2.charAt(j - 1) == s3.charAt(i + j - 1));
+            }
+        }
+        return dp[n2];
+    }
+
     // 115. Distinct Subsequences
     public int numDistinct(String s, String t) {
         int m = s.length(), n = t.length();
@@ -171,13 +216,11 @@ public class DynamicPrograming {
         if (triangle.size() == 1) return triangle.get(0).get(0);
         int rows = triangle.size();
         int[] dp = new int[rows + 1];
-        Arrays.fill(dp, 0);
         for (int i = rows - 1; i >= 0; i--) {
             for (int j = 0; j <= i; j++) {
                 dp[j] = Math.min(dp[j], dp[j + 1]) + triangle.get(i).get(j);
             }
         }
-
         return dp[0];
     }
 
@@ -186,8 +229,6 @@ public class DynamicPrograming {
     public boolean wordBreak(String s, List<String> wordDict) {
         int n = s.length();
         int[] dp = new int[n];
-        Arrays.fill(dp, 0);
-
         for (int i = 0; i < n; i++) {
             for (String word : wordDict) {
                 if (i - word.length() + 1 < 0) {
@@ -195,7 +236,7 @@ public class DynamicPrograming {
                 }
 
                 if (s.substring(i - word.length() + 1, i + 1).equals(word)) {
-                    if (i - word.length() + 1 == 0 || (i - word.length() + 1 > 0 && dp[i - word.length()] == 1)) {
+                    if (i - word.length() + 1 == 0 || dp[i - word.length() + 1] == 1) {
                         dp[i] = 1;
                         break;
                     }
@@ -222,7 +263,6 @@ public class DynamicPrograming {
         return prev;
     }
 
-
     // 221. Maximal Square
     public int maximalSquare(char[][] matrix) {
         int rows = matrix.length;
@@ -246,6 +286,58 @@ public class DynamicPrograming {
             }
         }
         return max * max;
+    }
+
+    // 300. Longest Increasing Subsequence
+    /* METHOD 1: DP */
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int max = 1;
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        for (int i = 1; i < n; i++) {
+            for (int j = i; j >= 0; j--) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            max = Math.max(max, dp[i]);
+        }
+        return max;
+    }
+
+    /* METHOD 2: BINARY SEARCH */
+    public int lengthOfLISII(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        for (int n : nums) {
+            if  (list.isEmpty() || list.get(list.size() - 1) < n) {
+                list.add(n);
+            } else {
+                int index = Collections.binarySearch(list, n);
+                if (index < 0) {
+                    index = -1 * (index + 1);
+                    list.set(index, n);
+                }
+            }
+        }
+        return list.size();
+    }
+
+    // 322. Coin Change
+    public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; i++) {
+            for (int coin : coins) {
+                if (i - coin < 0) continue;
+
+                if (dp[i - coin] != Integer.MAX_VALUE) {
+                    dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+                }
+            }
+        }
+        return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
     }
 
     // 516. Longest Palindromic Subsequence
@@ -383,6 +475,7 @@ public class DynamicPrograming {
 
     // 1478. Allocate Mailboxes
     public final int INF = 100 * 10000;
+
     public int minDistance(int[] houses, int k) {
         int n = houses.length;
         Arrays.sort(houses);

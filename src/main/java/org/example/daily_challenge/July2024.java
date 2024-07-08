@@ -2,9 +2,7 @@ package org.example.daily_challenge;
 
 import org.example.utilities.ListNode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class July2024 {
     // 1509. Minimum Difference Between Largest and Smallest Value in Three Moves
@@ -43,6 +41,15 @@ public class July2024 {
             if (count == 3) return true;
         }
         return false;
+    }
+
+    // 1823. Find the Winner of the Circular Game
+    public int findTheWinner(int n, int k) {
+        int res = 0;
+        for (int i = 1; i <= n; i++) {
+            res = (res + k) % i;
+        }
+        return res + 1;
     }
 
     // 2058. Find the Minimum and Maximum Number of Nodes Between Critical Points

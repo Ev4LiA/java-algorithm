@@ -2,6 +2,7 @@ package org.example.daily_challenge;
 
 import org.example.utilities.TreeNode;
 import org.example.utilities.TrieNode;
+import org.example.utilities.UnionFind;
 
 import java.util.*;
 
@@ -692,6 +693,51 @@ public class June2024 {
     // 1552. Magnetic Force Between Two Balls
     public int maxDistance(int[] position, int m) {
         return 0;
+    }
+
+    // 1579. Remove Max Number of Edges to Keep Graph Fully Traversable
+    public int maxNumEdgesToRemove(int n, int[][] edges) {
+        Arrays.sort(edges, (a, b) -> a[0] - b[0]);
+        int edgeAdd = 0;
+
+        UnionFind alice = new UnionFind(n);
+        UnionFind bob = new UnionFind(n);
+
+        for (int[] edge : edges) {
+            int type = edge[0];
+            int a = edge[1];
+            int b = edge[2];
+
+            switch (type) {
+                case 3:
+                    if (alice.unite(a, b) | bob.unite(a, b)) {
+                        edgeAdd++;
+                    }
+                    break;
+                case 2:
+                    if (bob.unite(a, b)) {
+                        edgeAdd++;
+                    }
+                    break;
+                case 1:
+                    if (alice.unite(a, b)) {
+                        edgeAdd++;
+                    }
+                    break;
+            }
+        }
+
+        return (alice.united() && bob.united()) ? edges.length - edgeAdd : -1;
+    }
+
+    // 1791. Find Center of Star Graph
+    public int findCenter(int[][] edges) {
+        int a = edges[0][0],  b = edges[0][1];
+        if (edges[1][0] == a || edges[1][1] == a) {
+            return a;
+        } else {
+            return b;
+        }
     }
 
     // 1827. Minimum Operations to Make the Array Increasing
