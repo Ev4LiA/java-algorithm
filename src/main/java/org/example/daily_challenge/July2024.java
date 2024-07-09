@@ -2,7 +2,9 @@ package org.example.daily_challenge;
 
 import org.example.utilities.ListNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class July2024 {
     // 1509. Minimum Difference Between Largest and Smallest Value in Three Moves
@@ -41,6 +43,18 @@ public class July2024 {
             if (count == 3) return true;
         }
         return false;
+    }
+
+    // 1701. Average Waiting Time
+    public double averageWaitingTime(int[][] customers) {
+        double sum = 0;
+        int endTime = -1;
+        for (int[] customer : customers) {
+            endTime = Math.max(endTime, customer[0]);
+            endTime += customer[1];
+            sum += endTime - customer[0];
+        }
+        return sum / customers.length;
     }
 
     // 1823. Find the Winner of the Circular Game
