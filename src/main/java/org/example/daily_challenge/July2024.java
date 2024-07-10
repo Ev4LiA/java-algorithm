@@ -45,6 +45,23 @@ public class July2024 {
         return false;
     }
 
+    // 1598. Crawler Log Folder
+    public int minOperations(String[] logs) {
+        int depth = 0;
+        for (String log : logs) {
+            if (log.charAt(0) == '.') {
+                if (log.charAt(1) == '.') {
+                    if (depth > 0) {
+                        depth--;
+                    }
+                }
+            } else {
+                depth++;
+            }
+        }
+        return depth;
+    }
+
     // 1701. Average Waiting Time
     public double averageWaitingTime(int[][] customers) {
         double sum = 0;
