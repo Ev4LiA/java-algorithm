@@ -46,7 +46,7 @@ public class Main {
 
         int[] nums = {2, 4, 6};
         int[][] querries = {{0, 1}};
-        System.out.println(problem.averageWaitingTime(new int[][]{{2,3},{6,3},{7,5},{11,3},{15,2},{18,1}}));
+        System.out.println(problem.reverseParentheses("(ed(et(oc))el)"));
 //        System.out.println(3 | 3);
 
         // System out Array

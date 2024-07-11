@@ -5,8 +5,27 @@ import org.example.utilities.ListNode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 public class July2024 {
+    // 1190. Reverse Substrings Between Each Pair of Parentheses
+    public String reverseParentheses(String s) {
+        Stack<StringBuilder> stack = new Stack<>();
+        stack.push(new StringBuilder());
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                stack.push(new StringBuilder());
+            } else if (s.charAt(i) == ')') {
+                StringBuilder topBuilder = stack.pop().reverse();
+                stack.push(stack.pop().append(topBuilder));
+            } else {
+                stack.push(stack.pop().append(s.charAt(i)));
+            }
+        }
+
+        return stack.pop().toString();
+    }
+
     // 1509. Minimum Difference Between Largest and Smallest Value in Three Moves
     public int minDifference(int[] nums) {
         Arrays.sort(nums);
