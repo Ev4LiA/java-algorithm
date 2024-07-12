@@ -93,6 +93,88 @@ public class July2024 {
         return sum / customers.length;
     }
 
+    // 1717. Maximum Score From Removing Substrings
+    /* METHOD 1: USE STACK */
+    public int maximumGain(String s, int x, int y) {
+        Stack<Character> stack = new Stack<>();
+        int res = 0;
+
+        if (x < y) {
+            // exchange x and y, reverse string s
+            int temp = x;
+            x = y;
+            y = temp;
+            s = new StringBuilder(s).reverse().toString();
+        }
+        // Remove ab first
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == 'b') {
+                if (stack.isEmpty() || stack.peek() != 'a') {
+                    stack.push(s.charAt(i));
+                } else {
+                    stack.pop();
+                    res += x;
+                }
+            } else {
+                stack.push(s.charAt(i));
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
+
+        s = sb.reverse().toString();
+
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == 'a') {
+                if (stack.isEmpty() || stack.peek() != 'b') {
+                    stack.push(s.charAt(i));
+                } else {
+                    stack.pop();
+                    res += y;
+                }
+            } else {
+                stack.push(s.charAt(i));
+            }
+        }
+        return res;
+    }
+
+    /* METHOD 2: COUNTIN */
+    public int maximumGainII(String s, int x, int y) {
+        int res = 0, aCount = 0, bCount = 0;
+
+        if (x < y) {
+            // exchange x and y, reverse string s
+            int temp = x;
+            x = y;
+            y = temp;
+            s = new StringBuilder(s).reverse().toString();
+        }
+        // Remove ab first
+        for (char c : s.toCharArray()) {
+            if (c == 'a') {
+                aCount++;
+            } else if (c == 'b') {
+                if (aCount > 0) {
+                    aCount--;
+                    res += x;
+                } else {
+                    bCount++;
+                }
+            } else {
+                res += Math.min(bCount, aCount) * y;
+                aCount = bCount = 0;
+            }
+        }
+
+        res += Math.min(bCount, aCount) * y;
+        return res;
+    }
+
+
     // 1823. Find the Winner of the Circular Game
     public int findTheWinner(int n, int k) {
         int res = 0;

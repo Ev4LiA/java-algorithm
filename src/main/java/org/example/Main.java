@@ -46,7 +46,7 @@ public class Main {
 
         int[] nums = {2, 4, 6};
         int[][] querries = {{0, 1}};
-        System.out.println(problem.reverseParentheses("(ed(et(oc))el)"));
+        System.out.println(problem.maximumGainII("cdbcbbaaabab", 4, 5));
 //        System.out.println(3 | 3);
 
         // System out Array
