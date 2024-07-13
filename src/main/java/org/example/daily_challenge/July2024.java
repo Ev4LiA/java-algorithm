@@ -2,12 +2,40 @@ package org.example.daily_challenge;
 
 import org.example.utilities.ListNode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class July2024 {
+    // 735. Asteroid Collision
+    public int[] asteroidCollision(int[] asteroids) {
+        Stack<Integer> stack = new Stack<>();
+
+        for (int asteroid : asteroids) {
+            if (stack.isEmpty()) {
+                stack.push(asteroid);
+            } else {
+                while (!stack.isEmpty() && (stack.peek() > 0 && asteroid < 0)) {
+                    if (Math.abs(stack.peek()) >= Math.abs(asteroid)) {
+                        if (Math.abs(stack.peek()) == Math.abs(asteroid)) {
+                            stack.pop();
+                        }
+                        asteroid = 0;
+                        break;
+                    } else {
+                        stack.pop();
+                    }
+                }
+                if (asteroid != 0) {
+                    stack.push(asteroid);
+                }
+            }
+        }
+        int[] res = new int[stack.size()];
+        for (int i = res.length - 1; i >= 0; i--) {
+            res[i] = stack.pop();
+        }
+        return res;
+    }
+
     // 1190. Reverse Substrings Between Each Pair of Parentheses
     public String reverseParentheses(String s) {
         Stack<StringBuilder> stack = new Stack<>();
@@ -142,7 +170,7 @@ public class July2024 {
         return res;
     }
 
-    /* METHOD 2: COUNTIN */
+    /* METHOD 2: COUNTING */
     public int maximumGainII(String s, int x, int y) {
         int res = 0, aCount = 0, bCount = 0;
 
@@ -173,7 +201,6 @@ public class July2024 {
         res += Math.min(bCount, aCount) * y;
         return res;
     }
-
 
     // 1823. Find the Winner of the Circular Game
     public int findTheWinner(int n, int k) {
@@ -243,5 +270,65 @@ public class July2024 {
         } else {
             return n - time % n;
         }
+    }
+
+    // 2751. Robot Collisions
+    static class Robot {
+        int position;
+        int health;
+        char direction;
+        int index;
+
+        Robot(int position, int health, char direction, int index) {
+            this.position = position;
+            this.health = health;
+            this.direction = direction;
+            this.index = index;
+        }
+    }
+
+    public List<Integer> survivedRobotsHealths(int[] positions, int[] healths, String directions) {
+        List<Robot> list = new ArrayList<>();
+
+        for (int i = 0; i < positions.length; i++) {
+            Robot robot = new Robot(positions[i], healths[i], directions.charAt(i), i);
+            list.add(robot);
+        }
+        list.sort((a, b) -> a.position - b.position);
+
+        Stack<Robot> stack = new Stack<>();
+        for (Robot robot : list) {
+            if (stack.isEmpty()) {
+                stack.push(robot);
+            } else {
+                while (!stack.isEmpty() && (stack.peek().direction == 'R' && robot.direction == 'L')) {
+                    if (stack.peek().health >= robot.health) {
+                        if (stack.peek().health == robot.health) {
+                            stack.pop();
+                        } else {
+                            Robot top = stack.pop();
+                            top.health--;
+                            stack.push(top);
+                        }
+                        robot.health = 0;
+                        break;
+                    } else {
+                        stack.pop();
+                        robot.health--;
+                    }
+                }
+                if (robot.health != 0) {
+                    stack.push(robot);
+                }
+            }
+        }
+
+        stack.sort((a, b) -> b.index - a.index);
+        List<Integer> res = new ArrayList<>();
+        int n = stack.size();
+        for (int i = 0; i < n; i++) {
+            res.add(stack.pop().health);
+        }
+        return res;
     }
 }

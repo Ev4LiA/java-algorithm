@@ -1,7 +1,6 @@
 package org.example;
 
 import org.example.daily_challenge.July2024;
-import org.example.daily_challenge.June2024;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,15 +45,15 @@ public class Main {
 
         int[] nums = {2, 4, 6};
         int[][] querries = {{0, 1}};
-        System.out.println(problem.maximumGainII("cdbcbbaaabab", 4, 5));
+//        System.out.println(problem.asteroidCollision(new int[]{-2, -1, 1, 2}));
 //        System.out.println(3 | 3);
 
         // System out Array
         System.out.print("Array elements: \n");
-//        boolean[] res = problem.isArraySpecial(nums, querries);
-//        for (int i = 0; i < res.length; i++) {
-//            System.out.print(res[i] + " ");
-//        }
+        List<Integer> res = problem.survivedRobotsHealths(new int[]{5,4,3,2,1},new int[]{2,17,9,15,10}, "RRRRR");
+        for (int i = 0; i < res.size(); i++) {
+            System.out.print(res.get(i) + " ");
+        }
 
 //        for (int i = 0; i < res.length; i++) {
 //            for (int j = 0; j < res[0].length; j++) {
