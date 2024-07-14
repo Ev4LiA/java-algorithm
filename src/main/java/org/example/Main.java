@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.contest.weekly_contest.Contest401;
+import org.example.contest.weekly_contest.Contest406;
 import org.example.daily_challenge.July2024;
 
 import java.util.ArrayList;
@@ -45,15 +47,15 @@ public class Main {
 
         int[] nums = {2, 4, 6};
         int[][] querries = {{0, 1}};
-//        System.out.println(problem.asteroidCollision(new int[]{-2, -1, 1, 2}));
+        System.out.println( problem.countOfAtoms("H2O"));
 //        System.out.println(3 | 3);
 
         // System out Array
         System.out.print("Array elements: \n");
-        List<Integer> res = problem.survivedRobotsHealths(new int[]{5,4,3,2,1},new int[]{2,17,9,15,10}, "RRRRR");
-        for (int i = 0; i < res.size(); i++) {
-            System.out.print(res.get(i) + " ");
-        }
+//        List<Integer> res = problem.minimumCost(2, 3, new int[]{1, 3},new int[]{5});
+//        for (int i = 0; i < res.size(); i++) {
+//            System.out.print(res.get(i) + " ");
+//        }
 
 //        for (int i = 0; i < res.length; i++) {
 //            for (int j = 0; j < res[0].length; j++) {

@@ -5,6 +5,66 @@ import org.example.utilities.ListNode;
 import java.util.*;
 
 public class July2024 {
+    // 726. Number of Atoms
+    public String countOfAtoms(String formula) {
+        Stack<HashMap<String, Integer>> stack = new Stack<>();
+        stack.push(new HashMap<>());
+        int index = 0;
+        while (index < formula.length()) {
+            if (formula.charAt(index) == '(') {
+                stack.push(new HashMap<>());
+                index++;
+            } else if (formula.charAt(index) == ')') {
+                HashMap<String, Integer> map = stack.pop();
+                index++;
+                StringBuilder multiplier = new StringBuilder();
+                while (index < formula.length() && Character.isDigit(formula.charAt(index))) {
+                    multiplier.append(formula.charAt(index));
+                    index++;
+                }
+
+                if (!multiplier.isEmpty()) {
+                    int mult = Integer.parseInt(multiplier.toString());
+                    for (String atom : map.keySet()) {
+                        map.put(atom, map.get(atom) * mult);
+                    }
+                }
+
+                for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                    stack.peek().put(entry.getKey(), stack.peek().getOrDefault(entry.getKey(), 0) + entry.getValue());
+                }
+            } else {
+                StringBuilder atom = new StringBuilder();
+                atom.append(formula.charAt(index));
+                index++;
+                while (index < formula.length() && Character.isLowerCase(formula.charAt(index))) {
+                    atom.append(formula.charAt(index));
+                    index++;
+                }
+
+                StringBuilder currCount = new StringBuilder();
+                while (index < formula.length() && Character.isDigit(formula.charAt(index))) {
+                    currCount.append(formula.charAt(index));
+                    index++;
+                }
+                int count = currCount.length() > 0 ? Integer.parseInt(currCount.toString()) : 1;
+                stack.peek()
+                        .put(atom.toString(), stack.peek().getOrDefault(atom.toString(), 0) + count);
+            }
+        }
+
+        TreeMap<String, Integer> finalMap = new TreeMap<>(stack.peek());
+
+        StringBuilder ans = new StringBuilder();
+        for (String atom : finalMap.keySet()) {
+            ans.append(atom);
+            if (finalMap.get(atom) > 1) {
+                ans.append(finalMap.get(atom));
+            }
+        }
+        return ans.toString();
+    }
+
     // 735. Asteroid Collision
     public int[] asteroidCollision(int[] asteroids) {
         Stack<Integer> stack = new Stack<>();
