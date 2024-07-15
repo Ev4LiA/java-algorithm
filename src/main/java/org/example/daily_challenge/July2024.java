@@ -1,6 +1,7 @@
 package org.example.daily_challenge;
 
 import org.example.utilities.ListNode;
+import org.example.utilities.TreeNode;
 
 import java.util.*;
 
@@ -390,5 +391,31 @@ public class July2024 {
             res.add(stack.pop().health);
         }
         return res;
+    }
+
+    // 2196. Create Binary Tree From Descriptions
+    public TreeNode createBinaryTree(int[][] descriptions) {
+        HashMap<Integer, TreeNode> map = new HashMap<>();
+        Set<Integer> childSet = new HashSet<>();
+        for (int[] description : descriptions) {
+            int parentValue = description[0];
+            int childValue = description[1];
+            TreeNode childNode = map.computeIfAbsent(childValue, k -> new TreeNode(childValue));
+
+            TreeNode parentNode = map.computeIfAbsent(parentValue, k -> new TreeNode(parentValue));
+            if (description[2] == 1) {
+                parentNode.left = childNode;
+            } else {
+                parentNode.right = childNode;
+            }
+            childSet.add(childValue);
+        }
+
+        for (int[] d : descriptions) {
+            if (!childSet.contains(d[0])) {
+                return map.get(d[0]);
+            }
+        }
+        return null;
     }
 }
