@@ -306,6 +306,46 @@ public class July2024 {
         return res;
     }
 
+    // 2096. Step-By-Step Directions From a Binary Tree Node to Another
+    public String getDirections(TreeNode root, int startValue, int destValue) {
+        StringBuilder pathToStart = new StringBuilder();
+        StringBuilder pathToDest = new StringBuilder();
+        findPath(root, startValue, pathToStart);
+        findPath(root, destValue, pathToDest);
+
+        int commonPathLength = 0;
+        while (commonPathLength < pathToStart.length()
+                && commonPathLength < pathToDest.length()
+                && pathToStart.charAt(commonPathLength) ==
+                 pathToDest.charAt(commonPathLength)
+        ) {
+            commonPathLength++;
+        }
+
+        StringBuilder res = new StringBuilder();
+        res.append("U".repeat(pathToStart.length() - commonPathLength));
+
+        for (int i = commonPathLength; i < pathToDest.length(); i++) {
+            res.append(pathToDest.charAt(i));
+        }
+        return res.toString();
+    }
+
+    private boolean findPath(TreeNode root, int targetValue, StringBuilder path) {
+        if (root == null) return false;
+        if (root.val == targetValue) return true;
+
+        path.append("L");
+        if (findPath(root.left, targetValue, path)) return true;
+        path.setLength(path.length() - 1);
+
+        path.append("R");
+        if (findPath(root.right, targetValue, path)) return true;
+        path.setLength(path.length() - 1);
+
+        return false;
+    }
+
     // 2181. Merge Nodes in Between Zeros
     public ListNode mergeNodes(ListNode head) {
         ListNode dummy = head.next;
@@ -321,6 +361,32 @@ public class July2024 {
             dummy = dummy.next;
         }
         return head.next;
+    }
+
+    // 2196. Create Binary Tree From Descriptions
+    public TreeNode createBinaryTree(int[][] descriptions) {
+        HashMap<Integer, TreeNode> map = new HashMap<>();
+        Set<Integer> childSet = new HashSet<>();
+        for (int[] description : descriptions) {
+            int parentValue = description[0];
+            int childValue = description[1];
+            TreeNode childNode = map.computeIfAbsent(childValue, k -> new TreeNode(childValue));
+
+            TreeNode parentNode = map.computeIfAbsent(parentValue, k -> new TreeNode(parentValue));
+            if (description[2] == 1) {
+                parentNode.left = childNode;
+            } else {
+                parentNode.right = childNode;
+            }
+            childSet.add(childValue);
+        }
+
+        for (int[] d : descriptions) {
+            if (!childSet.contains(d[0])) {
+                return map.get(d[0]);
+            }
+        }
+        return null;
     }
 
     // 2582. Pass the Pillow
@@ -393,29 +459,5 @@ public class July2024 {
         return res;
     }
 
-    // 2196. Create Binary Tree From Descriptions
-    public TreeNode createBinaryTree(int[][] descriptions) {
-        HashMap<Integer, TreeNode> map = new HashMap<>();
-        Set<Integer> childSet = new HashSet<>();
-        for (int[] description : descriptions) {
-            int parentValue = description[0];
-            int childValue = description[1];
-            TreeNode childNode = map.computeIfAbsent(childValue, k -> new TreeNode(childValue));
 
-            TreeNode parentNode = map.computeIfAbsent(parentValue, k -> new TreeNode(parentValue));
-            if (description[2] == 1) {
-                parentNode.left = childNode;
-            } else {
-                parentNode.right = childNode;
-            }
-            childSet.add(childValue);
-        }
-
-        for (int[] d : descriptions) {
-            if (!childSet.contains(d[0])) {
-                return map.get(d[0]);
-            }
-        }
-        return null;
-    }
 }
