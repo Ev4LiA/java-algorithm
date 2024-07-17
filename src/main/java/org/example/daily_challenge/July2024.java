@@ -97,6 +97,40 @@ public class July2024 {
         return res;
     }
 
+    // 1110. Delete Nodes And Return Forest
+    public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
+        List<TreeNode> res = new ArrayList<>();
+        HashSet<Integer> setToDelete = new HashSet<>();
+        for (int value : to_delete) {
+            setToDelete.add(value);
+        }
+
+        root = postOrder(root, setToDelete, res);
+        if (root != null) {
+            res.add(root);
+        }
+        return res;
+    }
+
+    private TreeNode postOrder(TreeNode root, HashSet<Integer> setToDelete, List<TreeNode> res) {
+        if (root == null) return null;
+
+        root.left = postOrder(root.left, setToDelete, res);
+        root.right = postOrder(root.right, setToDelete, res);
+
+        if (setToDelete.contains(root.val)) {
+            if (root.left != null) {
+                res.add(root.left);
+            }
+
+            if (root.right != null) {
+                res.add(root.right);
+            }
+            return null;
+        }
+        return root;
+    }
+
     // 1190. Reverse Substrings Between Each Pair of Parentheses
     public String reverseParentheses(String s) {
         Stack<StringBuilder> stack = new Stack<>();
