@@ -52,10 +52,10 @@ public class Main {
 
         // System out Array
         System.out.print("Array elements: \n");
-//        List<Integer> res = problem.minimumCost(2, 3, new int[]{1, 3},new int[]{5});
-//        for (int i = 0; i < res.size(); i++) {
-//            System.out.print(res.get(i) + " ");
-//        }
+        List<Integer> res = problem.luckyNumbers(new int[][]{{1,10,4,2},{9,3,8,7},{15,16,17,12}});
+        for (int i = 0; i < res.size(); i++) {
+            System.out.print(res.get(i) + " ");
+        }
 
 //        for (int i = 0; i < res.length; i++) {
 //            for (int j = 0; j < res[0].length; j++) {

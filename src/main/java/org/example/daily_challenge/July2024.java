@@ -149,6 +149,31 @@ public class July2024 {
         return stack.pop().toString();
     }
 
+    // 1380. Lucky Numbers in a Matrix
+    public List<Integer> luckyNumbers(int[][] matrix) {
+        int rows = matrix.length, cols = matrix[0].length;
+        int[] minArray = new int[rows];
+        List<Integer> res = new ArrayList<>();
+        Arrays.fill(minArray, Integer.MAX_VALUE);
+
+        int[] maxArray = new int[cols];
+        Arrays.fill(maxArray, Integer.MIN_VALUE);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                minArray[i] = Math.min(minArray[i], matrix[i][j]);
+                maxArray[j] = Math.max(maxArray[j], matrix[i][j]);
+            }
+        }
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (matrix[i][j] == minArray[i] && matrix[i][j] == maxArray[j]) {
+                    res.add(matrix[i][j]);
+                }
+            }
+        }
+        return res;
+    }
+
     // 1509. Minimum Difference Between Largest and Smallest Value in Three Moves
     public int minDifference(int[] nums) {
         Arrays.sort(nums);
@@ -171,6 +196,58 @@ public class July2024 {
         }
         res += numBottles;
         return res;
+    }
+
+    // 1530. Number of Good Leaf Nodes Pairs
+    public int countPairs(TreeNode root, int distance) {
+        Map<TreeNode, List<TreeNode>> graph = new HashMap<>();
+        Set<TreeNode> leaves = new HashSet<>();
+
+        traverseTree(root, null, graph, leaves);
+        int res = 0;
+
+        for (TreeNode leaf : leaves) {
+            Queue<TreeNode> bfsQueue = new LinkedList<>();
+            Set<TreeNode> seen = new HashSet<>();
+            bfsQueue.add(leaf);
+            seen.add(leaf);
+
+            for (int i = 0; i <= distance; i++) {
+                int size = bfsQueue.size();
+                for (int j = 0; j < size; j++) {
+                    TreeNode curNode = bfsQueue.remove();
+
+                    if (leaves.contains(curNode) && curNode != leaf) {
+                        res++;
+                    }
+                    if (graph.containsKey(curNode)) {
+                        for (TreeNode neighbor : graph.get(curNode)) {
+                            if (!seen.contains(neighbor)) {
+                                bfsQueue.add(neighbor);
+                                seen.add(neighbor);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return res / 2;
+    }
+
+    private void traverseTree(TreeNode currentNode, TreeNode prevNode, Map<TreeNode, List<TreeNode>> graph, Set<TreeNode> leaves) {
+        if (currentNode == null) return;
+
+        if (currentNode.left == null && currentNode.right == null) {
+            leaves.add(currentNode);
+        }
+
+        if (prevNode != null) {
+            graph.computeIfAbsent(prevNode, k -> new ArrayList<>()).add(currentNode);
+            graph.computeIfAbsent(currentNode, k -> new ArrayList<>()).add(prevNode);
+        }
+
+        traverseTree(currentNode.left, currentNode, graph, leaves);
+        traverseTree(currentNode.right, currentNode, graph, leaves);
     }
 
     // 1550. Three Consecutive Odds
@@ -351,7 +428,7 @@ public class July2024 {
         while (commonPathLength < pathToStart.length()
                 && commonPathLength < pathToDest.length()
                 && pathToStart.charAt(commonPathLength) ==
-                 pathToDest.charAt(commonPathLength)
+                pathToDest.charAt(commonPathLength)
         ) {
             commonPathLength++;
         }
