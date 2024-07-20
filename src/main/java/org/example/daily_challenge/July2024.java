@@ -281,6 +281,19 @@ public class July2024 {
         return depth;
     }
 
+    // 1605. Find Valid Matrix Given Row and Column Sums
+    public int[][] restoreMatrix(int[] rowSum, int[] colSum) {
+        int[][] res = new int[rowSum.length][colSum.length];
+        for (int i = 0; i < rowSum.length; i++) {
+            for (int j = 0; j < colSum.length; j++) {
+                res[i][j] = Math.min(rowSum[i], colSum[j]);
+                rowSum[i] -= res[i][j];
+                colSum[j] -= res[i][j];
+            }
+        }
+        return res;
+    }
+
     // 1701. Average Waiting Time
     public double averageWaitingTime(int[][] customers) {
         double sum = 0;
