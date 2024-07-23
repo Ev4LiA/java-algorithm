@@ -294,6 +294,33 @@ public class July2024 {
         return res;
     }
 
+    // 1636. Sort Array by Increasing Frequency
+    public int[] frequencySort(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+
+        Integer[] numsObj = new Integer[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            numsObj[i] = nums[i];
+        }
+
+        Arrays.sort(numsObj, (a, b) -> {
+            int valueComparison = map.get(a).compareTo(map.get(b));
+            if (valueComparison != 0) {
+                return valueComparison;
+            } else {
+                return b.compareTo(a);
+            }
+        });
+
+        for (int i = 0; i < nums.length; i++) {
+            nums[i] = numsObj[i];
+        }
+        return nums;
+    }
+
     // 1701. Average Waiting Time
     public double averageWaitingTime(int[][] customers) {
         double sum = 0;
@@ -511,6 +538,22 @@ public class July2024 {
             }
         }
         return null;
+    }
+
+    // 2418. Sort the People
+    public String[] sortPeople(String[] names, int[] heights) {
+        int n = heights.length;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            map.put(heights[i], i);
+        }
+
+        String[] res = new String[names.length];
+        Arrays.sort(heights);
+        for (int i = n - 1; i >= 0; i--) {
+            res[n - 1 - i] = names[map.get(heights[i])];
+        }
+        return res;
     }
 
     // 2582. Pass the Pillow
