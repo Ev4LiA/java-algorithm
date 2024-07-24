@@ -514,6 +514,40 @@ public class July2024 {
         return head.next;
     }
 
+    // 2191. Sort the Jumbled Numbers
+    public int[] sortJumbled(int[] mapping, int[] nums) {
+        List<Integer[]> newNums = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            int place = 1;
+            int newNum = 0, temp = nums[i];
+            if (nums[i] == 0) {
+                newNums.add(new Integer[]{mapping[0], i});
+                continue;
+            }
+
+            while (temp != 0) {
+                newNum = place * mapping[temp % 10] + newNum;
+                place *= 10;
+                temp /= 10;
+            }
+            newNums.add(new Integer[]{newNum, i});
+        }
+
+        Collections.sort(newNums, (a, b) -> {
+            if (Objects.equals(a[0], b[0])) {
+                return a[1] - b[1];
+            } else {
+                return a[0] - b[0];
+            }
+        });
+
+        int[] res = new int[nums.length];
+        for (int i = 0; i < newNums.size(); i++) {
+            res[i] = nums[newNums.get(i)[1]];
+        }
+        return res;
+    }
+
     // 2196. Create Binary Tree From Descriptions
     public TreeNode createBinaryTree(int[][] descriptions) {
         HashMap<Integer, TreeNode> map = new HashMap<>();
