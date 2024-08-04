@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.contest.weekly_contest.Contest401;
 import org.example.contest.weekly_contest.Contest406;
+import org.example.contest.weekly_contest.Contest407;
 import org.example.daily_challenge.July2024;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        July2024 problem = new July2024();
+        Contest407 problem = new Contest407();
 //        List<List<Integer>> nums = new ArrayList<>();
 //        nums.add(Arrays.asList(2));
 //        nums.add(Arrays.asList(3, 4));
@@ -47,15 +48,15 @@ public class Main {
 
         int[] nums = {2, 4, 6};
         int[][] querries = {{0, 1}};
-        System.out.println( problem.countOfAtoms("H2O"));
+        System.out.println( problem.maxOperations("01"));
 //        System.out.println(3 | 3);
 
         // System out Array
         System.out.print("Array elements: \n");
-        List<Integer> res = problem.luckyNumbers(new int[][]{{1,10,4,2},{9,3,8,7},{15,16,17,12}});
-        for (int i = 0; i < res.size(); i++) {
-            System.out.print(res.get(i) + " ");
-        }
+//        List<Integer> res = problem.luckyNumbers(new int[][]{{1,10,4,2},{9,3,8,7},{15,16,17,12}});
+//        for (int i = 0; i < res.size(); i++) {
+//            System.out.print(res.get(i) + " ");
+//        }
 
 //        for (int i = 0; i < res.length; i++) {
 //            for (int j = 0; j < res[0].length; j++) {

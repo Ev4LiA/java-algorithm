@@ -97,6 +97,49 @@ public class July2024 {
         return res;
     }
 
+    // 912. Sort an Array
+    public int[] sortArray(int[] nums) {
+        mergeSort(nums, 0, nums.length - 1);
+        return nums;
+    }
+
+    private void mergeSort(int[] arr, int low, int high) {
+        if (low >= high) {
+            return;
+        }
+
+        int mid = low + (high - low)/2;
+        mergeSort(arr, low, mid);
+        mergeSort(arr, mid + 1, high);
+        merge(arr, low, mid, high);
+    }
+
+    private void merge(int[] arr, int low, int mid, int high) {
+        int n1 = mid - low + 1;
+        int n2 = high - mid;
+        int[] leftPart = new int[n1];
+        int[] rightPart = new int[n2];
+
+        System.arraycopy(arr, low, leftPart, 0, n1);
+        System.arraycopy(arr, mid + 1, rightPart, 0, n2);
+        int i = 0, j = 0, writeIndex = low;
+        while (i < n1 && j < n2) {
+            if (leftPart[i] <= rightPart[j]) {
+                arr[writeIndex++] = leftPart[i++];
+            } else {
+                arr[writeIndex++] = rightPart[j++];
+            }
+        }
+
+        while (i < n1) {
+            arr[writeIndex++] = leftPart[i++];
+        }
+
+        while (j < n2) {
+            arr[writeIndex++] = rightPart[j++];
+        }
+    }
+
     // 1110. Delete Nodes And Return Forest
     public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
         List<TreeNode> res = new ArrayList<>();
@@ -423,6 +466,11 @@ public class July2024 {
         return res + 1;
     }
 
+    // 2045. Second Minimum Time to Reach Destination
+    public int secondMinimum(int n, int[][] edges, int time, int change) {
+        return 0;
+    }
+
     // 2058. Find the Minimum and Maximum Number of Nodes Between Critical Points
     public int[] nodesBetweenCriticalPoints(ListNode head) {
         ListNode dummy = head.next;
@@ -574,6 +622,11 @@ public class July2024 {
         return null;
     }
 
+    // 2392. Build a Matrix With Conditions
+    public int[][] buildMatrix(int k, int[][] rowConditions, int[][] colConditions) {
+        return null;
+    }
+
     // 2418. Sort the People
     public String[] sortPeople(String[] names, int[] heights) {
         int n = heights.length;
@@ -660,5 +713,8 @@ public class July2024 {
         return res;
     }
 
-
+    // 2976. Minimum Cost to Convert String I
+    public long minimumCost(String source, String target, char[] original, char[] changed, int[] cost) {
+        return 0;
+    }
 }
